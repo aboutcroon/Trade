@@ -89,7 +89,7 @@
               <template slot-scope="scope">
                 <el-link class="icon iconfont icontask" size="mini" type="primary" plain @click="editFun(scope.row)">查看&nbsp;&nbsp;</el-link>
                 <el-link class="icon iconfont icontask" size="mini" type="primary" plain @click="editFun(scope.row)">编辑&nbsp;&nbsp;</el-link>
-                <el-link class="icon iconfont iconactivated" size="mini" type="success" plain @click="deleteFun(scope.row.menuId)">通过</el-link>
+                <!-- <el-link class="icon iconfont iconactivated" size="mini" type="success" plain @click="deleteFun(scope.row.menuId)">通过</el-link> -->
               </template>
             </el-table-column>
           </el-table>

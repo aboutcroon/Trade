@@ -18,6 +18,12 @@
     </el-form-item>
     <el-form-item label="用户类型" prop="competitorType">
       <el-select v-model="infoData.competitorType" :disabled="disabled" placeholder="请选择用户类型">
+        <el-option :value="0" label="学生"></el-option>
+        <el-option :value="1" label="设计师"></el-option>
+      </el-select>
+    </el-form-item>
+    <!-- <el-form-item label="用户类型" prop="competitorType">
+      <el-select v-model="infoData.competitorType" :disabled="disabled" placeholder="请选择用户类型">
         <el-option
           v-for="item in matchList"
           :value="item.value"
@@ -25,7 +31,7 @@
           :label="item.label"
         ></el-option>
       </el-select>
-    </el-form-item>
+    </el-form-item>-->
     <el-form-item label="所在企业/学校" prop="competitorOrganization">
       <el-input
         v-model="infoData.competitorOrganization"
@@ -45,12 +51,8 @@
       <p class="referrer">推荐人信息（非必填）</p>
       <span class="btn c00b3f5" @click="referrerModifyFun">修改推荐人信息</span>
     </div>
-    <el-form-item label="推荐人用户名">
-      <el-input
-        v-model="infoData.referenceName"
-        :disabled="referrerDisabled"
-        placeholder="请输入推荐人用户名"
-      ></el-input>
+    <el-form-item label="推荐人">
+      <el-input v-model="infoData.referenceName" :disabled="referrerDisabled" placeholder="请输入推荐人"></el-input>
     </el-form-item>
     <el-form-item label="联系电话" prop="referenceContactInformation">
       <el-input
@@ -204,20 +206,26 @@ export default {
       });
     },
     addFun() {
-      this.infoData.competitorMajor =
-        this.infoData.competitorType == "1"
-          ? null
-          : this.infoData.competitorMajor;
-      var url =
-        this.disabled == false && this.referrerDisabled == false
-          ? "/trade-web/api/competitor/user/add"
-          : "/trade-web/api/competitor/user/update";
-      postFun(url, this.infoData).then(res => {
-        if (res.code == 200) {
-          this.$message.success(res.message);
-          this.currentFun()
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          this.infoData.competitorMajor =
+            this.infoData.competitorType == "1"
+              ? null
+              : this.infoData.competitorMajor;
+          var url =
+            this.disabled == false && this.referrerDisabled == false
+              ? "/trade-web/api/competitor/user/add"
+              : "/trade-web/api/competitor/user/update";
+          postFun(url, this.infoData).then(res => {
+            if (res.code == 200) {
+              this.$message.success(res.message);
+              this.currentFun();
+            } else {
+              this.$message.error(res.message);
+            }
+          });
         } else {
-          this.$message.error(res.message);
+          return false;
         }
       });
     },

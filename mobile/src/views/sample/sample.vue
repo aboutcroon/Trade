@@ -75,10 +75,10 @@
             </div>
 
             <!--展示作品-->
-            <div class="show" v-for="item in sampleList" :key="item.worksId" @click="readSample(item)">
+            <div class="show" v-for="item in sampleList" :key="item.worksId" @click="readSample(item.worksId)">
                 <div class="show_item">
                     <div class="show_tag1"><span>{{ item.prizeName }}</span></div>
-                    <div class="show_like1">{{ item.agreeNumber }}</div>
+                    <div class="show_like1">{{ item.agreeCount }}</div>
                     <div class="show_image">
                         <img :src="item.worksJpgUrl">
                     </div>
@@ -86,7 +86,7 @@
                     <div class="show_author"><span>设计师：{{ item.worksDesigner }}</span></div>
                     <div class="show_people">
                         <i class="iconfont iconeye"></i>
-                        2324人
+                        {{item.starValue}}人
                     </div>
                 </div>
             </div>
@@ -132,7 +132,7 @@ export default {
                 paras: {
                     competitionId: 100,
                     categoryNameList: ['公益', '酒类'],
-                    prizeRateNameList: ['金奖', '银奖', '铜奖', '人气奖']
+                    prizeRateNameList: ['第三届中华商标大赛', '初筛通过']
                 }
             },
             // 作品数据
@@ -153,11 +153,11 @@ export default {
             setActivePage: 'set_ActivePage'
         }),
         // 跳转到作品展示厅->作品详情
-        readSample() {
+        readSample(key) {
             this.$router.push({
                 name: 'sampleDetail',
                 query: {
-                    'sampleId': 1
+                    'sampleId': key
                 }
             })
             this.setActivePage(12)
@@ -183,26 +183,26 @@ export default {
                 this.choose.copper = true
             }
         },
-        // // 切换tab
-        // tabClick() {
-        //     if (this.activeName === 'first') {
-        //         this.choose.ch20 = true
-        //         this.choose.ch19 = true
-        //         this.choose.ch18 = true
-        //     } else if (this.activeName === 'second') {
-        //         this.choose.ch20 = true
-        //         this.choose.ch19 = false
-        //         this.choose.ch18 = false
-        //     } else if (this.activeName === 'third') {
-        //         this.choose.ch20 = false
-        //         this.choose.ch19 = true
-        //         this.choose.ch18 = false
-        //     } else if (this.activeName === 'fourth') {
-        //         this.choose.ch20 = false
-        //         this.choose.ch19 = false
-        //         this.choose.ch18 = true
-        //     }
-        // },
+        // 切换tab
+        tabClick() {
+            // if (this.activeName === 'first') {
+            //     this.choose.ch20 = true
+            //     this.choose.ch19 = true
+            //     this.choose.ch18 = true
+            // } else if (this.activeName === 'second') {
+            //     this.choose.ch20 = true
+            //     this.choose.ch19 = false
+            //     this.choose.ch18 = false
+            // } else if (this.activeName === 'third') {
+            //     this.choose.ch20 = false
+            //     this.choose.ch19 = true
+            //     this.choose.ch18 = false
+            // } else if (this.activeName === 'fourth') {
+            //     this.choose.ch20 = false
+            //     this.choose.ch19 = false
+            //     this.choose.ch18 = true
+            // }
+        },
         // 关闭筛选框
         filterClose() {
             this.filterVisible = false
@@ -360,7 +360,7 @@ export default {
                 @include wh(78.706771vw, 10.070227vw);
                 position: relative;
                 background: #B30000;
-                margin-left: 6.625149vw;
+                margin-left: 5.565125vw;
                 margin-top: 6.095137vw;
                 margin-bottom: 5.300119vw;
 

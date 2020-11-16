@@ -1,60 +1,60 @@
 <template>
-  <div class="trade-detail">
-    <el-form labelWidth="94px" class="work-detail-form">
-      <el-form-item label="作品名称：">
-        <span>{{worksName}}</span>
-      </el-form-item>
-      <el-form-item label="作者名称：">
-        <span>{{worksDesigner}}</span>
-      </el-form-item>
-      <el-form-item label="作品属性：">
-        <span>{{propertyName}}</span>
-      </el-form-item>
-      <el-form-item label="作品类型：">
-        <span>{{categoryName}}</span>
-      </el-form-item>
-      <el-form-item label="赛事选择：">
-        <span>{{competitionName}}</span>
-      </el-form-item>
-      <el-form-item label="奖项类型：">
-        <span>{{prizeName}}</span>
-      </el-form-item>
-      <el-form-item label="作品说明：">
-        <span>{{worksDescription}}</span>
-      </el-form-item>
-      <el-form-item label="上传作品：">
-        <div class="img-container">
-          <img :src="worksJpgUrl"/>
-        </div>
-      </el-form-item>
-    </el-form>
-    <router-link to="/user">
-      <el-button class="user-btn-return">返回</el-button>
-    </router-link>
-  </div>
+  <section class="background-one">
+    <div class="part container exhibition-container">
+      <div class="img-container">
+        <img :src="backgroundUrl"/>
+        <div class=""></div>
+      </div>
+      <el-form labelWidth="94px" class="work-detail-form">
+        <el-form-item label="作品哈希：">
+          <span>{{czHash}}</span>
+        </el-form-item>
+        <el-form-item label="作品名称：">
+          <span>{{worksName}}</span>
+        </el-form-item>
+        <el-form-item label="作者名称：">
+          <span>{{worksDesigner}}</span>
+        </el-form-item>
+        <el-form-item label="作品属性：">
+          <span>{{propertyName}}</span>
+        </el-form-item>
+        <el-form-item label="作品类型：">
+          <span>{{categoryName}}</span>
+        </el-form-item>
+        <el-form-item label="赛事选择：">
+          <span>{{competitionName}}</span>
+        </el-form-item>
+        <el-form-item label="奖项类型：">
+          <span>{{prizeName}}</span>
+        </el-form-item>
+        <el-form-item label="作品说明：">
+          <span>{{worksDescription}}</span>
+        </el-form-item>
+      </el-form>
+      <div class="more-works">更多作品</div>
+    </div>
+  </section>
 </template>
 <script>
   import {getFun, postFun} from '@/api/transit.js'
   export default {
-    name: 'TradeDetail',
-    components: {},
+    components: {
+    },
     data() {
       return {
         backgroundUrl: require("@/assets/img/exhibition_background.jpg"),
-        workUrl: require("@/assets/img/home_guest_1.jpg"),
+        workUrl: '',
         worksId: '',
+        czHash: '',
         worksName: '',
         worksDesigner: '',
-        worksPropertyId: '0',
-        categoryId: '0',
+        propertyId: 0,
         propertyName: '',
+        categoryId: 0,
         categoryName: '',
-        competitionId: '',
         competitionName: '',
         prizeName: '',
         worksDescription: '',
-        worksJpgUrl: '',
-
         // 类型map
         typeMap: {
           property: {
@@ -87,33 +87,32 @@
       }
     },
     mounted() {
-      this.init()
+      this.getInitData()
     },
     methods: {
-      init() {
-        let worksId = this.$route.query.worksId
-        this.getWorkData(worksId)
+      getInitData() {
+        this.worksId = this.$route.query.worksId
+        this.getWorkData(this.worksId)
         this.getDictData()
       },
-      // 加载数据
       getWorkData(worksId) {
-        let param = {
+        const param = {
           worksId: worksId
         }
         this.getWork(param).then(response => {
           if (response.code === '200' || response.code === 200) {
-            let data = response.data
+            const data = response.data
+            this.czHash = data.czHash
             this.worksName = data.worksName
             this.worksDesigner = data.worksDesigner
-            this.worksPropertyId = data.worksPropertyId
+            this.propertyId = data.worksPropertyId
             this.categoryId = data.categoryId
-            this.propertyName = this.typeMap.property[this.worksPropertyId]
+            this.propertyName = this.typeMap.property[this.propertyId]
             this.categoryName = this.typeMap.category[this.categoryId]
-            this.competitionId = data.competitionId
             this.competitionName = data.competitionName
             this.prizeName = data.prizeName
             this.worksDescription = data.worksDescription
-            this.worksJpgUrl = data.worksJpgUrl
+            this.workUrl = data.worksJpgUrl
           } else {
             this.$message.error(response.message)
           }
@@ -135,7 +134,7 @@
             }
             this.typeMap.category = typeList
 
-            this.propertyName = this.typeMap.property[this.worksPropertyId]
+            this.propertyName = this.typeMap.property[this.propertyId]
             this.categoryName = this.typeMap.category[this.categoryId]
 
           } else {
@@ -146,24 +145,51 @@
       getWork(param) {
         return postFun('/trade-web/api/works/selectByWorksId', param)
       },
+      getWorkList(param) {
+        return postFun('/trade-web/api/works/pageList', param)
+      },
       // 获取筛选列表
       getDict(param) {
         return getFun('/trade-web/api/dict', param)
       },
+      getValue(val) {
+        if (val) {
+          return val
+        } else {
+          return 0
+        }
+      }
     }
   };
 </script>
 <style lang="scss">
   @import "../../../assets/palette.scss";
 
-  .trade-detail {
+  .exhibition-detail {
+    .background-one {
+      min-width: $min-container;
+      margin-top: 20px;
+    }
+    .background-grey {
+      background-color: #F9F9F9;
+    }
+
     .img-container {
       max-width: 100%;
+
+      img {
+        max-width: 100%;
+        min-height: 100px;
+      }
+    }
+
+    .exhibition-container {
+      padding: 20px;
     }
 
     .work-detail-form {
-      margin-top: 18px;
-      width: 90%;
+      margin-top: 50px;
+      width: 832px;
 
       .el-form-item {
         margin-bottom: 52px;
@@ -173,28 +199,6 @@
         line-height: 28px;
       }
     }
-    .el-button {
-      padding: 0;
-    }
-    .img-container {
-      img {
-        max-width: 100%;
-      }
-    }
-  }
-
-  .user-btn-return {
-    height: 46px;
-    width: 132px;
-    background-color: transparent;
-    border: 1px solid #FF0000;
-    color: #FF0000;
-    margin-left: 94px;
-  }
-
-  .user-btn-return:hover {
-    background-color: #FF0000;
-    color: #FFFFFF;
   }
 
 </style>

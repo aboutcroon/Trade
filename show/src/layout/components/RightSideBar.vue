@@ -90,7 +90,7 @@
 <style scoped lang="scss">
   .right-side-bar {
     position: fixed;
-    top: 55%;
+    bottom: 10%;
     right: 20px;
     width: 60px;
     height: 120px;
@@ -106,7 +106,7 @@
       cursor: pointer;
     }
 
-    .right-bar-icon-container{
+    .right-bar-icon-container {
       height: 38px;
       width: 60px;
       padding-top: 8px;
@@ -117,7 +117,7 @@
       width: 60px;
     }
 
-    .right-bar-tip{
+    .right-bar-tip {
       height: 16px;
       font-size: 12px;
       font-family: SourceHanSansCN;

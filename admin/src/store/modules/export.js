@@ -17,6 +17,8 @@ Mock.mock('/api/load','get',[
 const state = {
   worksId:'',
   show:false,
+  worksStatus:'',
+  str:'',
   mockName:Mock.mock({
     "array|1-10":[
       {
@@ -31,9 +33,15 @@ const mutations = {
   closeExportBox: state => state.show = false,
   assignment: (state,data) => state.exprotData = data,
   mockName: (state,data) => state.mockName = data,
+  
   setWorksId: (state,data)=> {
-    console.log(state,data,'sss');
     state.worksId = data
+  },
+  worksStatus: (state,data)=> {
+    state.worksStatus = data
+  },
+  str: (state,data)=> {
+    state.str = data
   }
 }
 const actions = {

@@ -19,7 +19,7 @@
               <el-col :xs="24" :sm="24" :lg="8"> -->
             <el-form-item label="用户名称">
               <el-input
-                v-model="formData.username"
+                v-model="formData.paras.username"
                 prefix-icon="iconfont icon-sousuo iconsearchsvg"
                 clearable
                 placeholder="请输入"
@@ -29,17 +29,13 @@
             
             <el-form-item label="用户类型">
               <el-select
-                v-model="formData.status"
+                v-model="formData.paras.roleIdList"
                 placeholder="请选择用户类型"
                 @change="getList()"
               >
                 <el-option label="全部" value />
-                <el-option
-                  v-for="item in stateList"
-                  :key="item.key"
-                  :label="item.value"
-                  :value="item.key"
-                />
+                  <el-option label="user" value="4"></el-option>
+                  <el-option label="organization" value="5"></el-option>
               </el-select>
             </el-form-item>
             
@@ -49,7 +45,7 @@
               <el-button class="cx" @click="getList()">查询</el-button>
               <el-button class="filter-item" icon="el-icon-plus" @click="addShow()">重置</el-button>
               <el-button class="filter-item" icon="el-icon-plus" @click="addShow()">导出</el-button>
-              <el-button class="filter-item" icon="el-icon-plus" @click="addShow()">新增</el-button>
+              <!-- <el-button class="filter-item" icon="el-icon-plus" @click="addShow()">新增</el-button> -->
             </el-form-item>
             <!-- </el-row> -->
           </el-form>
@@ -89,7 +85,7 @@
               <template slot-scope="scope">
                 <el-link class="icon iconfont icontask" size="mini" type="primary" plain @click="editFun(scope.row)">查看&nbsp;&nbsp;</el-link>
                 <el-link class="icon iconfont icontask" size="mini" type="primary" plain @click="editFun(scope.row)">编辑&nbsp;&nbsp;</el-link>
-                <el-link class="icon iconfont iconactivated" size="mini" type="success" plain @click="deleteFun(scope.row.menuId)">通过</el-link>
+                <!-- <el-link class="icon iconfont iconactivated" size="mini" type="success" plain @click="deleteFun(scope.row.menuId)">通过</el-link> -->
               </template>
             </el-table-column>
           </el-table>

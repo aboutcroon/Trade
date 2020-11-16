@@ -24,17 +24,17 @@
                 ><span>筛选</span></span
               >
             </el-form-item>
-            <!-- <el-form-item>
-              <el-select v-model="formData.paras.competitionName" value-key="" placeholder="请筛选" clearable @change="getList()" >
+            <el-form-item>
+              <el-select v-model="formData.paras.competitionName" value-key="" placeholder="请筛选"  clearable @change="sl($event)" >
                 <el-option v-for="item in gamesList"
                   :key="item.competitionId"
                   :label="item.competitionName"
                   :value="item.competitionName">
                 </el-option>
               </el-select>
-            </el-form-item> -->
+            </el-form-item>
 
-            <el-form-item>
+            <!-- <el-form-item>
               <el-input
                 v-model="formData.menuName"
                 prefix-icon="iconfont icon-sousuo iconsearchsvg"
@@ -42,7 +42,7 @@
                 placeholder="作品属性"
                 @keyup.enter.native="getList()"
               />
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item>
               <el-date-picker
                 v-model="formData.paras.time"
@@ -63,7 +63,7 @@
               <el-button
                 class="filter-item"
                 icon="el-icon-plus"
-                @click="addShow()"
+                @click="reset()"
                 >重置</el-button
               >
               <el-button
@@ -159,7 +159,7 @@
                   size="mini"
                   type="primary"
                   plain
-                  @click="goOpus(scope.row.worksId)"
+                  @click="goOpus(scope.row.worksId,scope.row.worksStatus,'初筛')"
                   >查看&nbsp;&nbsp;</el-link
                 >
                 <el-link

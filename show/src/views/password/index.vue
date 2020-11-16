@@ -50,10 +50,10 @@
       >
         <el-form-item prop="password">
           <el-input
-            v-model="formPassword.password"
+            v-model.trim="formPassword.password"
             placeholder="请输入密码"
             @keyup.enter.native="autoFoucs('confirmPassword')"
-            @input="formPassword.password = formPassword.password.replace(/[\u4e00-\u9fa5]/g, '')"
+            @input="formPassword.password = formPassword.password.replace(/[\u4e00-\u9fa5\s]/g, '')"
             maxlength="16"
             show-password
           ></el-input>
@@ -61,17 +61,21 @@
         <el-form-item prop="confirmPassword">
           <el-input
             ref="confirmPassword"
-            v-model="formPassword.confirmPassword"
+            v-model.trim="formPassword.confirmPassword"
             placeholder="请输入确认密码"
-            @input="formPassword.confirmPassword = formPassword.confirmPassword.replace(/[\u4e00-\u9fa5]/g, '')"
+            @input="formPassword.confirmPassword = formPassword.confirmPassword.replace(/[\u4e00-\u9fa5\s]/g, '')"
             maxlength="16"
             show-password
           ></el-input>
         </el-form-item>
       </el-form>
       <div v-else-if="type === 2" class="reset-success">
-        <div class="success-logo"></div>
-        <p class="text">恭喜，用户{{ username }}重置密码成功！</p>
+        <div class="success-logo">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon_success"></use>
+          </svg>
+        </div>
+        <p class="text">恭喜，账号：{{ username }} 重置密码成功！</p>
       </div>
       <template #bottom>
         <div class="step">
@@ -301,8 +305,12 @@ export default {
   .success-logo {
     width: 72px;
     height: 72px;
-    background-color: #eee;
     margin-bottom: 24px;
+    svg {
+      width: 72px;
+      height: 72px;
+      fill: #15c29f;
+    }
   }
   .text {
     color: #999999;

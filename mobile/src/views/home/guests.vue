@@ -27,20 +27,20 @@
                             </div>
                         </div>
                     </div>
-                    <div v-show="showSample === 2">
-                        <div class="show_item">
-                            <div class="show_image">
-                                <img src="../../assets/img/sample1.png">
-                            </div>
-                            <div class="show_name">作品名</div>
-                        </div>
-                        <div class="show_item">
-                            <div class="show_image">
-                                <img src="../../assets/img/sample2.png">
-                            </div>
-                            <div class="show_name">作品名</div>
-                        </div>
-                    </div>
+<!--                    <div v-show="showSample === 2">-->
+<!--                        <div class="show_item">-->
+<!--                            <div class="show_image">-->
+<!--                                <img src="../../assets/img/sample1.png">-->
+<!--                            </div>-->
+<!--                            <div class="show_name">作品名</div>-->
+<!--                        </div>-->
+<!--                        <div class="show_item">-->
+<!--                            <div class="show_image">-->
+<!--                                <img src="../../assets/img/sample2.png">-->
+<!--                            </div>-->
+<!--                            <div class="show_name">作品名</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </div>
 
@@ -66,20 +66,20 @@
                             </div>
                         </div>
                     </div>
-                    <div v-show="showSample === 2">
-                        <div class="show_item">
-                            <div class="show_image">
-                                <img src="../../assets/img/sample1.png">
-                            </div>
-                            <div class="show_name">作品名</div>
-                        </div>
-                        <div class="show_item">
-                            <div class="show_image">
-                                <img src="../../assets/img/sample2.png">
-                            </div>
-                            <div class="show_name">作品名</div>
-                        </div>
-                    </div>
+<!--                    <div v-show="showSample === 2">-->
+<!--                        <div class="show_item">-->
+<!--                            <div class="show_image">-->
+<!--                                <img src="../../assets/img/sample1.png">-->
+<!--                            </div>-->
+<!--                            <div class="show_name">作品名</div>-->
+<!--                        </div>-->
+<!--                        <div class="show_item">-->
+<!--                            <div class="show_image">-->
+<!--                                <img src="../../assets/img/sample2.png">-->
+<!--                            </div>-->
+<!--                            <div class="show_name">作品名</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </div>
 
@@ -105,20 +105,20 @@
                             </div>
                         </div>
                     </div>
-                    <div v-show="showSample === 2">
-                        <div class="show_item">
-                            <div class="show_image">
-                                <img src="../../assets/img/sample1.png">
-                            </div>
-                            <div class="show_name">作品名</div>
-                        </div>
-                        <div class="show_item">
-                            <div class="show_image">
-                                <img src="../../assets/img/sample2.png">
-                            </div>
-                            <div class="show_name">作品名</div>
-                        </div>
-                    </div>
+<!--                    <div v-show="showSample === 2">-->
+<!--                        <div class="show_item">-->
+<!--                            <div class="show_image">-->
+<!--                                <img src="../../assets/img/sample1.png">-->
+<!--                            </div>-->
+<!--                            <div class="show_name">作品名</div>-->
+<!--                        </div>-->
+<!--                        <div class="show_item">-->
+<!--                            <div class="show_image">-->
+<!--                                <img src="../../assets/img/sample2.png">-->
+<!--                            </div>-->
+<!--                            <div class="show_name">作品名</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </div>
 
@@ -144,20 +144,20 @@
                             </div>
                         </div>
                     </div>
-                    <div v-show="showSample === 2">
-                        <div class="show_item">
-                            <div class="show_image">
-                                <img src="../../assets/img/sample1.png">
-                            </div>
-                            <div class="show_name">作品名</div>
-                        </div>
-                        <div class="show_item">
-                            <div class="show_image">
-                                <img src="../../assets/img/sample2.png">
-                            </div>
-                            <div class="show_name">作品名</div>
-                        </div>
-                    </div>
+<!--                    <div v-show="showSample === 2">-->
+<!--                        <div class="show_item">-->
+<!--                            <div class="show_image">-->
+<!--                                <img src="../../assets/img/sample1.png">-->
+<!--                            </div>-->
+<!--                            <div class="show_name">作品名</div>-->
+<!--                        </div>-->
+<!--                        <div class="show_item">-->
+<!--                            <div class="show_image">-->
+<!--                                <img src="../../assets/img/sample2.png">-->
+<!--                            </div>-->
+<!--                            <div class="show_name">作品名</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </div>
 
@@ -191,20 +191,20 @@
                             </div>
                         </div>
                     </div>
-                    <div v-show="showSample === 2">
-                        <div class="show_item">
-                            <div class="show_image">
-                                <img src="../../assets/img/sample1.png">
-                            </div>
-                            <div class="show_name">作品名</div>
-                        </div>
-                        <div class="show_item">
-                            <div class="show_image">
-                                <img src="../../assets/img/sample2.png">
-                            </div>
-                            <div class="show_name">作品名</div>
-                        </div>
-                    </div>
+<!--                    <div v-show="showSample === 2">-->
+<!--                        <div class="show_item">-->
+<!--                            <div class="show_image">-->
+<!--                                <img src="../../assets/img/sample1.png">-->
+<!--                            </div>-->
+<!--                            <div class="show_name">作品名</div>-->
+<!--                        </div>-->
+<!--                        <div class="show_item">-->
+<!--                            <div class="show_image">-->
+<!--                                <img src="../../assets/img/sample2.png">-->
+<!--                            </div>-->
+<!--                            <div class="show_name">作品名</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </div>
 
@@ -318,6 +318,7 @@ export default {
             .show {
                 @include fc;
                 width: 100%;
+                height: 100vh;
                 background: #F7F7F7;
                 margin-top: 3.975089vw;
 

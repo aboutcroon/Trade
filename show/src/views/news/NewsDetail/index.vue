@@ -3,7 +3,7 @@
     <BreadCrumbs
       title-right=""
       description="美感与设计的结合，尽在此时"
-      :url="backgroundUrl"
+      :background="backgroundUrl"
       :crumb="[{title: '新闻中心', link: 'news'},{title: '新闻详情', link: 'newsDetail'}]"
     />
     <section class="background-one">

@@ -11,7 +11,7 @@
           <router-link to="/" class="button-red return-button"
             >回到首页</router-link
           >
-          <router-link to="/" class="help-button">帮助中心</router-link>
+          <router-link to="/helpCenter" class="help-button">帮助中心</router-link>
         </div>
       </header>
       <div class="content">

@@ -26,7 +26,7 @@ export default {
         paras: {
           username: '',
           roleTypeList: [4,5]
-        },
+        }, 
         pageSize: 10,
         pageNumber: 1,
         totalRow: -1
@@ -211,7 +211,7 @@ export default {
     handleClose() {
       this.dialogVisible = false
       /** 恢复初始化数据 */
-      this.role = this.$options.data().role
+      // this.role = this.$options.data().role
     },
     onTreeDataChange(list) {
       list.forEach((c, index) => {

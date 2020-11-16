@@ -3,44 +3,11 @@
     <BreadCrumbs
       title="作品展示厅"
       title-right=""
-      description="描述"
+      description="美感与设计的结合，尽在此时"
       :url="backgroundUrl"
       :crumb="[{title: '作品展示厅', link: 'exhibition'},{title: '作品详情', link: 'exhibitionWorkDetail'}]"
     />
-    <section class="background-one">
-      <div class="part container exhibition-container">
-        <div class="img-container">
-          <img :src="workUrl"/>
-        </div>
-        <el-form labelWidth="94px" class="work-detail-form">
-          <el-form-item label="作品哈希：">
-            <span>{{czHash}}</span>
-          </el-form-item>
-          <el-form-item label="作品名称：">
-            <span>{{worksName}}</span>
-          </el-form-item>
-          <el-form-item label="作者名称：">
-            <span>{{worksDesigner}}</span>
-          </el-form-item>
-          <el-form-item label="作品属性：">
-            <span>{{propertyName}}</span>
-          </el-form-item>
-          <el-form-item label="作品类型：">
-            <span>{{categoryName}}</span>
-          </el-form-item>
-          <el-form-item label="赛事选择：">
-            <span>{{competitionName}}</span>
-          </el-form-item>
-          <el-form-item label="奖项类型：">
-            <span>{{prizeName}}</span>
-          </el-form-item>
-          <el-form-item label="作品说明：">
-            <span>{{worksDescription}}</span>
-          </el-form-item>
-        </el-form>
-        <div class="more-works">更多作品</div>
-      </div>
-    </section>
+    <work-detail></work-detail>
     <div class="more-works-container">
       <el-carousel arrow="always" indicator-position="none">
         <el-carousel-item v-for="(i, index) in bannerList" :key="index">
@@ -57,29 +24,20 @@
   import BreadCrumbs from "@/components/BreadCrumbs.vue"; // 背景
   import WorkCard from "../components/WorkCard.vue";
   import WorkTitle from "../components/WorkTitle.vue";
+  import WorkDetail from "../components/WorkDetail.vue";
   import {getFun, postFun} from '@/api/transit.js'
   export default {
     components: {
       SubTitle,
       BreadCrumbs,
       WorkCard,
-      WorkTitle
+      WorkTitle,
+      WorkDetail
     },
     data() {
       return {
         backgroundUrl: require("@/assets/img/exhibition_background.jpg"),
-        workUrl: '',
         bannerList: [],
-
-        worksId: '',
-        czHash: '',
-        worksName: '',
-        worksDesigner: '',
-        propertyName: '',
-        categoryName: '',
-        competitionName: '',
-        prizeName: '',
-        worksDescription: '',
       }
     },
     mounted() {
@@ -87,30 +45,7 @@
     },
     methods: {
       getInitData() {
-        this.worksId = this.$route.query.worksId
-        this.getWorkData(this.worksId)
         this.getWorkListData()
-      },
-      getWorkData(worksId) {
-        const param = {
-          worksId: worksId
-        }
-        this.getWork(param).then(response => {
-          if (response.code === '200' || response.code === 200) {
-            const data = response.data
-            this.czHash = data.czHash
-            this.worksName = data.worksName
-            this.worksDesigner = data.worksDesigner
-            this.propertyName = data.propertyName
-            this.categoryName = data.categoryName
-            this.competitionName = data.competitionName
-            this.prizeName = data.prizeName
-            this.worksDescription = data.worksDescription
-            this.workUrl = data.worksJpgUrl
-          } else {
-            this.$message.error(response.message)
-          }
-        })
       },
       // 更多作品列表
       getWorkListData() {
@@ -149,10 +84,6 @@
           }
         })
       },
-
-      getWork(param) {
-        return postFun('/trade-web/api/works/selectByWorksId', param)
-      },
       getWorkList(param) {
         return postFun('/trade-web/api/works/pageList', param)
       },
@@ -180,27 +111,6 @@
     .guest-content {
       overflow: hidden;
       width: 100%;
-    }
-
-    .img-container {
-      max-width: 100%;
-    }
-
-    .exhibition-container {
-      padding: 20px;
-    }
-
-    .work-detail-form {
-      margin-top: 50px;
-      width: 832px;
-
-      .el-form-item {
-        margin-bottom: 52px;
-      }
-
-      .el-form-item__label, .el-form-item__content {
-        line-height: 28px;
-      }
     }
 
     .more-works {

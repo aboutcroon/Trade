@@ -1,13 +1,13 @@
 <template>
   <div class="home-news">
-    <div class="left">
+    <div class="left" @click="clickLink('newsDetail')">
       <div class="images">
         <img :src="require('@/assets/img/home_news_1.jpg')" alt="" />
       </div>
       <h2 class="title">第三届（2019）中华商标创意设计大赛新闻发布会暨启动仪式在京举行</h2>
       <p class="text">2018年12月29日，以“商标设计激发创新活力，献礼祖国70周年”为主题的第三届（2019）中华商标创意设计大赛（下称大赛）新闻发布会暨启动仪式在京举行。</p>
       <div class="row more">
-        <span class="more-text" href="" @click="clickLink('newsDetail')">查看更多</span>
+        <span class="more-text" @click="clickLink('newsDetail')">查看更多</span>
       </div>
     </div>
     <ul class="right" @click="clickLink('newsDetail')">
@@ -80,9 +80,17 @@ $red: #FF0000;
     bottom: 12px;
   }
   .left {
+    cursor: pointer;
     width: 46%;
     padding-right: 20px;
     position: relative;
+    transition: color 0.3s;
+    &:hover {
+      .title,
+      .more-text {
+        color: $red;
+      }
+    }
     .images {
       margin-bottom: 32px;
       img {

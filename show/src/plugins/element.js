@@ -34,7 +34,6 @@ import {
 
 import '../assets/element-variables.scss'
 
-
 Vue.use(Button)
 Vue.use(Input)
 Vue.prototype.$message = Message

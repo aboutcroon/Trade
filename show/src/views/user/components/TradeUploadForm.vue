@@ -5,8 +5,7 @@
       ref="formTrade"
       :model="formTrade"
       :rules="ruleValidate"
-      :hide-required-asterisk="true"
-      label-width="100px">
+      label-width="106px">
       <el-form-item label="作品名称：" class="small-item" size="medium" prop="worksName">
         <el-input v-model="formTrade.worksName" placeholder="请输入"></el-input>
       </el-form-item>
@@ -147,7 +146,7 @@
           agree: false,
         },
         // 文件限制
-        limit: 1,
+        limit: 100,
         // 作品类型
         tradeTypeList: [],
         // 作品属性
@@ -209,8 +208,13 @@
       },
       handleImageSelect(file, fileList) {
         if (file) {
-          const isJPG = file.raw.type === 'image/jpeg';
-          if (isJPG) {
+          // 当前支持png格式
+          let types = ['image/jpeg'];
+          const isJPG = types.includes(file.raw.type);
+          // 字面限制200k，实际220k
+          if (file.size > 220 * 1024) {
+            this.$message.error('上传的电子照片过大')
+          } else if (isJPG) {
             this.imageUrl = URL.createObjectURL(file.raw);
             this.file2 = file
           } else {
@@ -411,11 +415,11 @@
       // 删除
       deleteFile1() {
         this.file1 = ''
-        vectorTip = '上传矢量图'
+        this.vectorTip = '上传矢量图'
       },
       deleteFile2() {
         this.file2 = ''
-        imageUrl = ''
+        this.imageUrl = ''
       },
       // 获取作品信息
       getWork(param) {
@@ -450,6 +454,7 @@
 
     .el-form-item__label {
       font-size: 16px;
+      text-align: left;
     }
 
     .small-item {

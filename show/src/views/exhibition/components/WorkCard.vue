@@ -1,9 +1,12 @@
 <template>
-  <div class="guest-card" @click="getWorks">
+  <div class="guest-card">
     <div class="content">
       <div class="card-avatar">
-        <span class="eventName">{{dataObj.eventName}}</span>
-        <div class="img-container">
+        <div class="eventName" v-show="dataObj.eventName">
+          <span class="eventLabel">{{dataObj.eventName}}</span>
+          <div class="eventBack"></div>
+        </div>
+        <div class="img-container" @click="getWorks">
           <img :src="dataObj.picture" alt class="img-div"/>
         </div>
         <div class="box">
@@ -14,7 +17,7 @@
           <span class="trade-item-number">{{dataObj.author}}</span>
         </div>
         <div class="btnBox">
-          <svg class="icon trade-item-icon" aria-hidden="true">
+          <svg class="icon trade-item-icon" aria-hidden="true" @click="good" style="cursor: pointer">
             <use xlink:href="#icon_like"></use>
           </svg>
           <span class="trade-item-number">{{dataObj.great}}</span>
@@ -25,18 +28,19 @@
         </div>
       </div>
     </div>
-    <router-link to="exhibitionWorkDetail">
-
-    </router-link>
   </div>
 </template>
 <script>
+  import { mapGetters, mapMutations } from 'vuex'
   export default {
     name: "works",
     props: {
       dataObj: {
         type: Object
-      }
+      },
+    },
+    computed: {
+      ...mapGetters(['userinfo', 'auth'])
     },
     methods: {
       getWorks() {
@@ -46,6 +50,14 @@
             worksId: this.dataObj.worksId
           }
         })
+      },
+      // 点赞
+      good() {
+        if(this.userinfo.roleType) {
+          this.$message.success('假装点赞成功了')
+        } else {
+          this.$message.error('点赞前请先登录账号')
+        }
       }
     }
   };
@@ -56,7 +68,6 @@
     position: relative;
     width: 25%;
     float: left;
-    cursor: pointer;
   }
 
   .content {
@@ -83,6 +94,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
       .img-div {
         display: inline-flex;
         max-width: 320px;
@@ -105,16 +117,32 @@
 
   .eventName {
     height: 30px;
-    background: #000000;
-    opacity: 0.12;
     position: absolute;
-    top: 0;
+    top: 14px;
     font-size: 14px;
     font-family: Source Han Sans CN;
     font-weight: 400;
     color: #ffffff;
-    line-height: 30px;
-    padding: 0 10px;
+
+
+    .eventLabel {
+      vertical-align: top;
+      display: inline-block;
+      background: #FF0000;
+      line-height: 30px;
+      padding: 0 10px;
+    }
+
+    .eventBack {
+      vertical-align: top;
+      display: inline-block;
+      line-height: 0;
+      width: 0;
+      height: 0 ;
+      border-top: 15px solid red;
+      border-right: 10px solid transparent;
+      border-bottom: 15px solid red;
+    }
   }
 
   .box {

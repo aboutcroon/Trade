@@ -4,7 +4,9 @@
     <section class="background-one">
       <div class="occlude">
         <home-innovation>
-          <router-link class="button-red home-button" to="/game">查看更多</router-link>
+          <router-link class="button-red home-button" to="/game"
+            >查看更多</router-link
+          >
         </home-innovation>
       </div>
     </section>
@@ -27,7 +29,9 @@
       </div>
       <div class="part container hot-news">
         <sub-title title="热点新闻" english="hot news">
-          <router-link to="/news" class="button-red see-more">查看更多</router-link>
+          <router-link to="/news" class="button-red see-more"
+            >查看更多</router-link
+          >
         </sub-title>
         <HomeNews />
       </div>
@@ -59,6 +63,7 @@ export default {
     HomeNews,
     HomePartner,
   },
+  created() {}
 }
 </script>
 

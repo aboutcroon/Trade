@@ -25,8 +25,8 @@
               >
             </el-form-item>
 
-            <el-form-item style="width:193px">
-              <el-select v-model="formData.paras.competitionName" value-key="" placeholder="请筛选" clearable @change="getList()" >
+            <el-form-item>
+              <el-select v-model="formData.paras.competitionName" value-key="" placeholder="请筛选"  clearable @change="sl($event)" >
                 <el-option v-for="item in gamesList"
                   :key="item.competitionId"
                   :label="item.competitionName"
@@ -63,22 +63,22 @@
               <el-button
                 class="filter-item"
                 icon="el-icon-plus"
-                @click="addShow()"
+                @click="reset()"
                 >重置</el-button
               >
               <el-button
                 class="filter-item"
                 icon="el-icon-plus"
-                @click="addShow()"
+                   @click="$store.commit('export/showExportBox')"
                 >导出</el-button
               >
-              <!-- <el-button
+              <el-button
                 class="filter-item"
                 icon="el-icon-plus"
                 @click="addShow()"
-                >普通奖项确认</el-button
+                >复审确认</el-button
               >
-              <el-button
+              <!-- <el-button
                 class="filter-item"
                 icon="el-icon-plus"
                 @click="addShow()"
@@ -156,8 +156,8 @@
               fixed="right"
             >
               <template slot-scope="scope">
-                <el-link v-if="scope.row.worksStatus != '6'" class="icon iconfont icontask" size="mini" type="primary" plain @click="goOpus(scope.row.worksId)">查看&nbsp;&nbsp;</el-link>
-                <el-link v-if="scope.row.worksStatus == '6'" class="icon iconfont iconxinhao1" size="mini" style="color:#005AB3" plain @click="goOpus(scope.row.worksId)">评分</el-link>
+                <el-link v-if="scope.row.worksStatus != '6'" class="icon iconfont icontask" size="mini" type="primary" plain @click="goOpus(scope.row.worksId,scope.row.worksStatus)">查看&nbsp;&nbsp;</el-link>
+                <el-link v-if="scope.row.worksStatus == '6'" class="icon iconfont iconxinhao1" size="mini" style="color:#005AB3" plain @click="goOpus(scope.row.worksId,scope.row.worksStatus)">评分</el-link>
                 <!-- <el-link class="icon iconfont iconactivated" size="mini" type="success" plain @click="deleteFun(scope.row.menuId)">通过</el-link>
                 <el-link class="icon iconfont iconchehuisekuai" size="mini" type="danger" plain @click="deleteFun(scope.row.menuId)">驳回</el-link> -->
               </template>

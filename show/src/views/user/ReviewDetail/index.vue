@@ -14,7 +14,7 @@
             <div class="img-container">
               <img :src="obj.worksJpgUrl" />
             </div>
-            <div style="margin-top:30px" v-show="type != 5 && type != 4">
+            <div style="margin-top:30px" v-show="judgeStage == 2">
               <el-button class="btn c00B3B3" round @click="updateStatuFun($event,obj.worksId,4)">通过</el-button>
               <el-button class="btn cB30000" round @click="updateStatuFun($event,obj.worksId,5)">驳回</el-button>
             </div>
@@ -40,33 +40,36 @@
             <el-form-item label="作品简介">
               <span>{{obj.worksDescription}}</span>
             </el-form-item>
-            <el-form-item label="作品打分">
+            <el-form-item label="作品打分" v-show="judgeStage == 3">
               <div>
                 <span>主旨</span>
-                <el-rate :disabled="statrDisabled" allow-half v-model="obj.starCount"></el-rate>
+                <el-rate :disabled="statrDisabled" allow-half v-model="obj.starPurpose"></el-rate>
               </div>
               <div>
                 <span>创意</span>
-                <el-rate :disabled="statrDisabled" allow-half v-model="obj.starCount"></el-rate>
+                <el-rate :disabled="statrDisabled" allow-half v-model="obj.starIdea"></el-rate>
               </div>
               <div>
                 <span>设计</span>
-                <el-rate :disabled="statrDisabled" allow-half v-model="obj.starCount"></el-rate>
+                <el-rate :disabled="statrDisabled" allow-half v-model="obj.starDesign"></el-rate>
               </div>
               <div>
                 <span>易用</span>
-                <el-rate :disabled="statrDisabled" allow-half v-model="obj.starCount"></el-rate>
+                <el-rate :disabled="statrDisabled" allow-half v-model="obj.starUsability"></el-rate>
               </div>
               <div>
                 <span>品牌</span>
-                <el-rate :disabled="statrDisabled" allow-half v-model="obj.starCount"></el-rate>
+                <el-rate :disabled="statrDisabled" allow-half v-model="obj.starBrand"></el-rate>
               </div>
               <div>
                 <span>延展</span>
-                <el-rate :disabled="statrDisabled" allow-half v-model="obj.starCount"></el-rate>
+                <el-rate :disabled="statrDisabled" allow-half v-model="obj.starExtension"></el-rate>
               </div>
             </el-form-item>
-            <el-button class="btn cB30000" round @click="scoreFun" v-if="!statrDisabled">确认</el-button>
+            <el-button class="user-btn cB30000" @click="scoreFun" v-show="judgeStage == 3">确认</el-button>
+            <router-link to="/user">
+              <el-button class="user-btn user-btn-return">返回</el-button>
+            </router-link>
           </el-form>
         </el-col>
       </el-row>
@@ -109,11 +112,11 @@ export default {
       categoryName: "",
       worksPropertyName: "",
       statrDisabled: false
-      
     };
   },
   mounted() {
     this.type = this.userinfo.roleType;
+    this.judgeStage = this.$route.query.judgeStage;
     this.reviewDetailFun();
   },
   methods: {
@@ -146,9 +149,9 @@ export default {
         if (res.code == 200) {
           this.obj = res.data;
           /**判断评分存在禁止修改 */
-          if (res.data.starCount) {
-            this.statrDisabled = true;
-          }
+          // if (res.data.starPurpose) {
+          //   this.statrDisabled = true;
+          // }
           this.getDictData();
         }
       });
@@ -170,7 +173,12 @@ export default {
     scoreFun() {
       var info = {
         worksId: this.$route.query.index.toString(),
-        starCount: this.obj.starCount
+        starPurpose: this.obj.starPurpose,
+        starIdea: this.obj.starIdea,
+        starDesign: this.obj.starDesign,
+        starUsability: this.obj.starUsability,
+        starBrand: this.obj.starBrand,
+        starExtension:this.obj.starExtension,
       };
       postFun("/trade-web/api/judge/score", info).then(res => {
         if (res.code == 200) {
@@ -241,11 +249,30 @@ export default {
   line-height: 30px;
   padding: 0 10px;
 }
+.user-btn {
+  height: 46px;
+  width: 132px;
+  padding: 15px 20px;
+}
+.user-btn-return {
+  background-color: transparent;
+  border: 1px solid #ff0000;
+  color: #ff0000;
+  margin-left: 20px;
+}
+
+.user-btn-return:hover {
+  background-color: #ff0000;
+  color: #ffffff;
+}
 </style>
 <style  lang="scss">
 .contentBox {
   .el-form-item__content {
     line-height: 40px !important;
+  }
+  .el-rate__icon {
+    font-size: 26px !important;
   }
 }
 </style>

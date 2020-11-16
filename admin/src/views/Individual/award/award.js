@@ -17,7 +17,28 @@ export default {
   filters: {
     /* 等级*/
     severity(status) {
-      var statusMap = status == '0' ? 'danger' : 'success'
+      var statusMap = null
+      if(status == 0 ){
+        statusMap = '未初筛'
+      } else if( status == 1 ) {
+        statusMap = '初筛通过'
+      } else if( status == 2 ) {
+        statusMap = '初筛驳回'
+      } else if( status == 3 ) {
+        statusMap = '未初审'
+      } else if( status == 4 ) {
+        statusMap = '初审通过'
+      } else if( status == 5 ) {
+        statusMap = '初审驳回'
+      } else if( status == 6 ) {
+        statusMap = '未复审'
+      } else if( status == 7 ) {
+        statusMap = '已评分'
+      } else if( status == 8 ) {
+        statusMap = '未获奖'
+      } else if( status == 9 ) {
+        statusMap = '已获奖'
+      }
       return statusMap
     }
   },
@@ -26,13 +47,29 @@ export default {
       list:[],
       formData: {
         paras: {
-          time: '',
-          menuName: ''
+          worksName:'',//作品名称	
+          competitionName:'',//赛事名称	
+          categoryName:'',//赛事类型	
+          propertyName:'',//作品属性	
+          prizeName:'',//奖项类型	
+          prizeRateName:'',//所获奖项
+          worksStatus:'',//作品状态 0-未初筛 1-初筛通过 2-初筛驳回 3-未初审 4-初审通过 5-初审驳回 6-未复审 7-已评分 8-已获奖
+          judgeUserName:'',//评委用户名
+          startTime:'',//上传开始时间	
+          endTime:'',//上传结束时间	
+          userName:'',//用户名
+          worksStatusList:[8,9],
+          time:''
         },
         pageSize: 10,
         pageNumber: 1,
         totalRow: -1
       },
+      competitionId:'',//当前大赛id
+      form:{}, // 评奖用的对象,储存评奖选择的奖励类型,功能暂未开通
+      key:'',
+      loading:false,
+      dialogFormVisible: false, // 评奖dialog
       // /* 奖项类型*/
       // stateList: [],
       // /* 赛事名称 */
@@ -58,29 +95,6 @@ export default {
       listLoading: false,
       /** 选中的值 */
       selecData: '',
-      /** 菜单隐藏显示 */
-      dialogVisible: false,
-      dialogType: 'new',
-      /** 菜单类型 */
-      menuFlagList: menuFlag(),
-      hiddenList: hiddenList(),
-      /** 菜单详情数据 */
-      role: {
-        competitionName:''
-      },
-      /** 验证 */
-      rules: {
-        competitionName: [{
-          required: true,
-          message: '请输入赛事名称',
-          trigger: 'blur'
-        }],
-        menuFlag: [{
-          required: true,
-          message: '请选择菜单类型',
-          trigger: 'change'
-        }]
-      },
       checkBoxData: [],
       loading: false,
       pickerOptions: {
@@ -141,163 +155,57 @@ export default {
       /** 分页默认从第一页开始 */
       this.formData.pageNumber = 1
       this.dictDataFun()
-      this.getList()
-      // this.selectFun()
+      this.gamesNameList()
+    },
+    /** 大赛名称接口 */
+    async gamesNameList(){
       const { data } = await getFun('/trade-admin/api/competition/list')
+      console.log(data,'大赛名称');
       this.gamesList = data
+      this.formData.paras.competitionName = data[0].competitionName // 默认选择第一个大赛,产品要求!
+      // this.competitionId = data[0].competitionId // 默认选择第一个大赛,产品要求!
+      this.sl()
+    },
+    sl(e){
+      // console.log(e,'val');
+      let obj = {};
+      obj = this.gamesList.find((item)=>{//model就是上面的数据源
+      return item.competitionName ===  this.formData.paras.competitionName;//筛选出匹配数据
+    });
+    // console.log(obj,'obj');
+    if (obj == undefined ) {
+      this.competitionId == ''
+    }else {
+      this.competitionId = obj.competitionId
+      // console.log(this.competitionId,'this.competitionId');
+    }
+    this.getList()
     },
     /** 表格 */
-    getList() {
+    async getList() {
       setTimeout(() => {
         this.listLoading = false
       }, 3000)
-      this.formData.paras = this.util.nullValueFun(this.formData.paras)
-      getList('/trade-admin/api/judge/pageList', this.formData).then(response => {
-        if (response.code == 200) {
-          this.list = response.data.list
-          this.formData.totalRow = response.data.totalRow;
+      for (const key in this.formData.paras) { 
+        if (this.formData.paras[key] == '')  this.formData.paras[key] = null
+      }
+      try {
+        this.formData.totalRow = -1
+        const { data } = await getList('/trade-admin/api/judge/pageList', this.formData)
+          this.list = data.list
+          this.formData.totalRow = data.totalRow;
           this.listLoading = false
-          this.role.orderNumber = response.data.length + 1
-        }
-      })
-    },
-
-    /** 添加菜单 */
-    addShow(row) {
-      this.dialogVisible = true
-      this.dialogType = 'new'
-      if (row == undefined) {
-        this.role.parentMenuId = 0
-      } else {
-        this.role.parentMenuId = row.menuId
+          
+      } catch (error) {
+        // this.$message.error('查询列表失败,数据为空')
+        this.loading = false
       }
-      this.$nextTick(() => {
-        this.$refs['formRole'].clearValidate()
-      })
     },
-    // handleCurrentChange(row) {
-    // 	this.parentMenuId = row.menuId
-    // },
-    /** 详情 */
-    editFun(row) {
-      this.dialogVisible = true
-      this.dialogType = 'edit'
-      // this.role = row;
-      this.role.menuId = row.menuId // 菜单标识
-      this.role.parentMenuId = row.parentMenuId // 父菜单标识
-      this.role.menuName = row.menuName // 菜单名称
-      this.role.menuFlag = row.menuFlag // 菜单标识 1 菜单  2 操作
-      this.role.menuUrl = row.menuUrl //
-      this.role.status = Number(row.status) // 状态 0 禁用 1 启用
-      this.role.orderNumber = row.orderNumber // 排序标识
-      this.role.menuList = row.menuList // 子级数组
-      this.role.menuIcon = row.menuIcon // 图标
-      this.role.hiddened = row.hiddened == true // 是否在左侧栏显示
-      this.$nextTick(() => {
-        this.$refs['formRole'].clearValidate()
-      })
-    },
-    /** 添加菜单 */
-    addFun() {
-      if (this.role.menuFlag != '1') {
-        this.role.hiddened = 'true'
-        this.role.menuIcon = ''
-      }
-      this.$refs['formRole'].validate((valid) => {
-        if (valid) {
-          this.loading = true
-          postFun('/trade-admin/api/menu/add', this.role).then(response => {
-            if (response.code == 200) {
-              this.loading = false
-              alertMsg('success', response.message)
-              this.handleClose()
-              /** 刷新表格 */
-              this.getList()
-            }
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          return false
-        }
-      })
-    },
-    /** 编辑菜单 */
-    modifyFun() {
-      if (this.role.menuFlag != '1') {
-        this.role.hiddened = 'true'
-        this.role.menuIcon = ''
-      }
-      this.$refs['formRole'].validate((valid) => {
-        if (valid) {
-          this.loading = true
-          postFun('/baas-admin/api/menu/modify', this.role).then(response => {
-            if (response.code == 200) {
-              this.loading = false
-              alertMsg('success', response.message)
-              this.handleClose()
-              /** 刷新表格 */
-              this.getList()
-            }
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          return false
-        }
-      })
-    },
-    /* 删除*/
-    deleteFun(menuId) {
-      /* 询问框*/
-      this.$confirm('是否删除此菜单', '确认信息', {
-        distinguishCancelAndClose: true,
-        confirmButtonText: '删除',
-        cancelButtonText: '取消',
-        confirmButtonClass: 'btndele',
-        type: 'warning'
-      }).then(() => {
-        /* 删除*/
-        postFun('/baas-admin/api/menu/delete', {
-          'menuId': menuId
-        }).then(response => {
-          if (response.code == 200) {
-            alertMsg('success', response.message)
-            /** 刷新表格 */
-            this.getList()
-          }
-        })
-      }).catch(action => {
-        return false
-      })
-    },
-    /** 关闭弹框 */
-    handleClose() {
-      this.dialogVisible = false
-      this.dialogInput = false
-      /** 恢复初始化数据 */
-      this.role = this.$options.data().role
-    },
-    onTreeDataChange(list) {
-      list.forEach((c, index) => {
-        this.updateOrderByMenuId.push({
-          'menuId': c.menuId, // 菜单ID
-          'orderNumber': index, // 排序号
-          'parentMenuId': c.parentMenuId
-        })
-        this.menuListFun(c, index)
-      })
-      this.treeData.lists = list
-
-      /* 排序*/
-      postFun('/baas-admin/api/menu/updateOrderByMenuId', this.updateOrderByMenuId).then(response => {
-        if (response.code == 200) {
-          alertMsg('success', response.message)
-          /** 刷新表格 */
-          this.getList()
-          this.updateOrderByMenuId = []
-        }
-      })
+ 
+    /* 重置 */
+    reset() {
+      for (const key in this.formData.paras) { this.formData.paras[key] = ''}
+      this.getList()
     },
     // 多选框选中的内容id
     changeFun(val) {
@@ -348,7 +256,7 @@ export default {
       this.dictFun({ key: '作品属性' }).then(res => {
         if (res.code == '200') {
           // console.log('this.typeList')
-          console.log(this.zpsxList)
+          // console.log(this.zpsxList)
           this.zpsxList = res.data
           this.collapseData.push({
             resData: { type: res.data },
@@ -359,7 +267,7 @@ export default {
       this.dictFun({ key: '作品类型' }).then(res => {
         if (res.code == '200') {
           // console.log('this.typeList')
-          console.log(this.zplxList)
+          // console.log(this.zplxList)
           this.zplxList = res.data
           this.collapseData.push({
             resData: { type: res.data },
@@ -370,7 +278,7 @@ export default {
       this.dictFun({ key: '普通用户名' }).then(res => {
         if (res.code == '200') {
           // console.log('this.typeList')
-          console.log(this.userList)
+          // console.log(this.userList)
           this.userList = res.data
           this.collapseData.push({
             resData: { type: res.data },
@@ -381,7 +289,7 @@ export default {
       this.dictFun({ key: '评委用户名' }).then(res => {
         if (res.code == '200') {
           // console.log('this.typeList')
-          console.log(this.pwuserList)
+          // console.log(this.pwuserList)
           this.pwuserList = res.data
           this.collapseData.push({
             resData: { type: res.data },
@@ -392,7 +300,7 @@ export default {
       this.dictFun({ key: '作品状态' }).then(res => {
         if (res.code == '200') {
           // console.log('this.zp')
-          console.log(this.zpztList)
+          // console.log(this.zpztList)
           this.zpztList = res.data
           this.collapseData.push({
             resData: { type: res.data },
@@ -403,7 +311,7 @@ export default {
       this.dictFun({ key: '个人奖' }).then(res => {
         if (res.code == '200') {
           // console.log('this.zp')
-          console.log(this.grList)
+          // console.log(this.grList)
           this.grList = res.data
           this.collapseData.push({
             resData: { type: res.data },
@@ -414,7 +322,7 @@ export default {
       this.dictFun({ key: '人气奖' }).then(res => {
         if (res.code == '200') {
           // console.log('this.zp')
-          console.log(this.rqList)
+          // console.log(this.rqList)
           this.rqList = res.data
           this.collapseData.push({
             resData: { type: res.data },
@@ -440,7 +348,63 @@ export default {
       this.formData.totalRow = -1
       this.formData.pageNumber = 1
       this.getList()
-    }
+    },
+    /* 评奖 */
+    awardFun(row){
+      this.dialogFormVisible = true,
+      this.form.worksId = row.worksId
+      this.selectFun()
+    },
+    selectFun(e){
+      console.log(e);
+      let obj = {};
+      obj = this.grList.find((item)=>{//model就是上面的数据源
+        return item.value ===  this.form.awards;//筛选出匹配数据
+      });
+      if (obj == undefined ) {
+        this.key == ''
+      }else {
+        this.key = obj.key
+        console.log(this.key,11222);
+      }
+    },
+    open(){
+      console.log(this.key,11);
+      switch (this.key) {
+        case 0: this.key = '金奖'
+        break;
+        case 1: this.key = '银奖'
+        break;
+        case 2: this.key = '铜奖'
+        break;
+        case 3: this.key = '优秀奖'
+        break;
+        default: this.key = '奖项为空'
+        break;
+      }
+      this.$confirm(`您评定${this.key}`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        getList('/trade-admin/api/judge/awards',{
+          worksId:this.form.worksId,
+          awards:this.form.awards
+        }).then(res=>{
+          this.dialogFormVisible = false
+          this.$message({
+            type: 'success',
+            message: res.message
+        })
+        this.getList()
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        });          
+      });
+    },
 
   }
 }

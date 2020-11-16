@@ -353,9 +353,10 @@ export default {
       this.formData.pageNumber = 1
       this.getList()
     },
-    goOpus(worksId) { // 跳转作品内页 
+    goOpus(worksId,worksStatus) { // 跳转作品内页 
       this.$router.push({ path: "zuoPinNeiYe" });
       this.$store.commit('export/setWorksId',worksId)
+      this.$store.commit('export/worksStatus',worksStatus)
     }
   }
 }

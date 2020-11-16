@@ -1,6 +1,11 @@
 <template>
   <div class="reveal home-banner">
-    <el-carousel arrow="never" indicator-position="none" ref="ElCarousel" :autoplay="move">
+    <el-carousel
+      arrow="never"
+      indicator-position="none"
+      ref="ElCarousel"
+      :autoplay="move"
+    >
       <el-carousel-item v-for="(item, index) in bannerList" :key="index">
         <div class="banner-item" :style="bannerList[0]">
           <div class="banner-center home-banner-1">
@@ -10,24 +15,36 @@
                 alt=""
               />
             </div>
-            <div class="sign-up">
-              <router-link class="button-red home-button" to="/login">立刻报名</router-link>
-            </div>
           </div>
         </div>
       </el-carousel-item>
     </el-carousel>
     <div class="carousel">
-      <div class="arrow prev" @click="clickSwitch('prev')" @mouseover="overSwitch" @mouseleave="leaveSwitch">
+      <div
+        class="arrow prev"
+        @click="clickSwitch('prev')"
+        @mouseover="overSwitch"
+        @mouseleave="leaveSwitch"
+      >
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon_left"></use>
         </svg>
       </div>
-      <div class="arrow next" @click="clickSwitch('next')" @mouseover="overSwitch" @mouseleave="leaveSwitch">
+      <div
+        class="arrow next"
+        @click="clickSwitch('next')"
+        @mouseover="overSwitch"
+        @mouseleave="leaveSwitch"
+      >
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon_right"></use>
         </svg>
       </div>
+    </div>
+    <div class="sign-up">
+      <router-link class="button-red home-button" to="/login"
+        >立刻报名</router-link
+      >
     </div>
     <!-- <div class="home-down">
       <svg class="icon mouse" aria-hidden="true">
@@ -71,7 +88,7 @@ export default {
         this.switchCd = true
         if (type === 'prev') {
           this.$refs.ElCarousel.prev()
-        } else if(type === 'next') {
+        } else if (type === 'next') {
           this.$refs.ElCarousel.next()
         }
         let timer = setTimeout(() => {
@@ -101,15 +118,22 @@ export default {
 }
 .home-banner-1 {
   .images {
-    margin-bottom: 60px;
+    margin-bottom: 100px;
     img {
       width: 787px;
     }
   }
 }
 .sign-up {
+  z-index: 3;
   text-align: center;
   margin-bottom: -20px;
+  position: absolute;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 180px);
+  user-select:none;
 }
 .reveal {
   position: relative;

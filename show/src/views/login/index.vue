@@ -24,7 +24,7 @@
             <el-input
               ref="username"
               v-model.trim="form.username"
-              placeholder="请输入用户名"
+              placeholder="请输入账号"
               @input="form.username=form.username.replace(/[^\w_]/g, '')"
               maxlength="20"
               autocomplete="on"
@@ -34,9 +34,9 @@
           <el-form-item prop="password">
             <el-input
               ref="password"
-              v-model="form.password"
+              v-model.trim="form.password"
               placeholder="请输入密码"
-              @input="form.password=form.password.replace(/[\u4e00-\u9fa5]/g, '')"
+              @input="form.password=form.password.replace(/[\u4e00-\u9fa5\s]/g, '')"
               maxlength="16"
               show-password
               @keyup.enter.native="autoFoucs('imgCaptcha')"
@@ -252,7 +252,6 @@ export default {
             this.mobileLogin()
           }
         } else {
-          /* this.$message.error('请正确填写登录信息！'); */
           return false;
         }
       })
@@ -267,7 +266,7 @@ export default {
       this.postPasswordLogin({ username, password, captcha: imgCaptcha, captchaToken }).then(response => {
         const message = response.message
         if (response.code === '200' || response.code === 200) {
-          this.saveUserInfo(response)
+          this.addInfo(response)
           this.setToken(response.data.token)
           if (this.autoLogin) {
             this.setTokenLocal(response.data.token)
@@ -290,7 +289,7 @@ export default {
         const message = response.message
         if (status === '200' || status === 200) {
           this.$message.success('登录成功');
-          this.saveUserInfo(response)
+          this.addInfo(response)
           this.setToken(response.data.token)
         } else {
           this.$message.error(message)
@@ -298,7 +297,7 @@ export default {
       })
     },
     /* 登录后保存用户信息 */
-    saveUserInfo(response) {
+    addInfo(response) {
       const message = response.message
       this.setToken(response.data.token)
       this.setUserInfo(response.data)

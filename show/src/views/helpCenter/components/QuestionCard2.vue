@@ -16,7 +16,10 @@
     methods: {
       handleClick() {
         this.$router.push({
-          name: 'question'
+          name: 'question',
+          query: {
+            articleId: this.articleId
+          }
         })
       }
     }

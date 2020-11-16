@@ -4,10 +4,10 @@
       background
       layout="prev, pager, next"
       :current-page="currentPage"
-      :page-size="10"
+      :page-size="12"
       :total="total"
       @current-change="handleCurrentChange"
-    > </el-pagination>
+    ></el-pagination>
   </div>
 </template>
 
@@ -36,7 +36,7 @@
     },
     methods: {
       handleCurrentChange(val) {
-        this.$emit('pagination', { page: val })
+        this.$emit('pagination', {page: val})
       }
     }
   }

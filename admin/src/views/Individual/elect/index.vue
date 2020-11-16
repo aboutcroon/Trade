@@ -22,16 +22,17 @@
               <el-form-item>
               <span class="icon iconfont iconfilter filter-button" @click="showFilter = !showFilter"><span>筛选</span></span>
             </el-form-item>
-                <!-- <el-form-item> -->
-              <!-- <el-select v-model="formData.paras.competitionName" value-key="" placeholder="请筛选" clearable @change="getList()" >
-                  <el-option v-for="item in gamesList"
-                    :key="item.competitionId"
-                    :label="item.competitionName"
-                    :value="item.competitionName">
-                  </el-option>
-                </el-select>
-              </el-form-item> -->
-                <el-form-item  >
+              
+            <el-form-item>
+              <el-select v-model="formData.paras.competitionName" value-key="" placeholder="请筛选"  clearable @change="sl($event)" >
+                <el-option v-for="item in gamesList"
+                  :key="item.competitionId"
+                  :label="item.competitionName"
+                  :value="item.competitionName">
+                </el-option>
+              </el-select>
+            </el-form-item>
+                <!-- <el-form-item  >
                   <el-input
                     v-model="formData.menuName"
                     prefix-icon="iconfont icon-sousuo iconsearchsvg"
@@ -39,7 +40,7 @@
                     placeholder="作品属性"
                     @keyup.enter.native="getList()"
                   />
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item  >
                   <el-date-picker
                     v-model="formData.paras.time"
@@ -60,7 +61,7 @@
               <el-carousel trigger="click" height="40px" style="width:220px; " arrow="always"  :autoplay="false">
                  <el-carousel-item>
                     <el-button class="cx" @click="getList()">查询</el-button>
-                    <el-button class="filter-item"  @click="clearShow()">重置</el-button>
+                    <el-button class="filter-item"  @click="reset()">重置</el-button>
                     <!-- <el-button class="filter-item"  @click="addShow()">导出</el-button>
                     <el-button class="filter-item"  @click="addShow()">初筛通过</el-button> -->
                   </el-carousel-item>
@@ -120,7 +121,7 @@
             <el-table-column label="所获奖项" :show-overflow-tooltip="true">
               <template slot-scope="scope">{{ scope.row.prizeRateName }}</template>
             </el-table-column>
-            <el-table-column label="作品缩略图" :show-overflow-tooltip="true">
+            <el-table-column label="作品缩略图">
               <template slot-scope="scope">
                 <img :src="scope.row.worksJpgUrl|imgs" alt="" width="80" height="40">
                 </template>
@@ -137,64 +138,6 @@
       </el-row>
       
 
-      <el-dialog
-        width="40%"
-        :visible.sync="dialogVisible"
-        :title="role.menuFlag== '1'? (dialogType==='edit' ? '编辑菜单':'新增菜单') : (dialogType==='edit' ? '编辑按钮' : '新增按钮')"
-        :before-close="handleClose"
-        :modal-append-to-body="false"
-      >
-        <el-form ref="formRole" :model="role" label-width="135px" label-position="left" :rules="rules">
-          <el-form-item label="类型" prop="menuFlag">
-            <el-radio v-model="role.menuFlag" label="1">菜单</el-radio>
-            <el-radio v-model="role.menuFlag" label="2">按钮</el-radio>
-          </el-form-item>
-          <el-form-item :label="role.menuFlag== '1' ? '菜单名称':'按钮名称'" prop="menuName">
-            <el-input
-              v-model="role.menuName"
-              :placeholder="role.menuFlag== '1' ? '请输入菜单名称' : '请输入按钮名称'"
-            />
-          </el-form-item>
-          <el-form-item :label="role.menuFlag == '1' ? '菜单URL':'控制器方法'" prop="menuUrl">
-            <el-input v-model="role.menuUrl" placeholder="请输入菜单URL" />
-          </el-form-item>
-          <el-form-item :label="role.menuFlag == '1' ? '菜单状态':'按钮状态'" prop="status">
-            <el-select v-model="role.status" placeholder="请选择菜单状态">
-              <el-option
-                v-for="item in stateList"
-                :key="item.key"
-                  :label="item.value"
-                  :value="item.key"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item v-if="role.menuFlag== '1'? true : false" label="图标">
-            <el-input v-model="role.menuIcon" placeholder="请输入图标类名" />
-          </el-form-item>
-          <el-form-item v-if="role.menuFlag== '1'? true : false" label="是否在侧边栏显示">
-            <el-select v-model="role.hiddened" placeholder="请选择是否在侧边栏显示">
-              <el-option
-                v-for="item in hiddenList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="排序" prop="orderNumber">
-            <el-input
-              v-model.number="role.orderNumber"
-              @input="role.orderNumber = role.orderNumber.replace(/[^\d]/g,'')"
-              maxlength="3"
-              placeholder="请输入排序"
-            />
-          </el-form-item>
-        </el-form>
-        <div slot="footer" style="text-align:center;" class="dialog-footer">
-          <el-button :loading="loading" class="cx" @click="dialogType == 'edit' ? modifyFun() : addFun()">保存</el-button>
-          <el-button @click="handleClose()">关闭</el-button>
-        </div>
-      </el-dialog>
     </div>
   </div>
 </template>

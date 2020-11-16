@@ -62,6 +62,7 @@ export default {
         pageNumber: 1,
         totalRow: -1
       },
+      competitionId:'',//当前大赛id
       // /* 奖项类型*/
       // stateList: [],
       // /* 赛事名称 */
@@ -170,161 +171,56 @@ export default {
       /** 分页默认从第一页开始 */
       this.formData.pageNumber = 1
       this.dictDataFun()
-      this.getList()
-      // this.selectFun()
+      this.gamesNameList()
+    },
+    /** 大赛名称接口 */
+    async gamesNameList(){
       const { data } = await getFun('/trade-admin/api/competition/list')
+      console.log(data,'大赛名称');
       this.gamesList = data
+      this.formData.paras.competitionName = data[0].competitionName // 默认选择第一个大赛,产品要求!
+      // this.competitionId = data[0].competitionId // 默认选择第一个大赛,产品要求!
+      this.sl()
+    },
+    sl(e){
+      console.log(e,'val');
+      let obj = {};
+      obj = this.gamesList.find((item)=>{//model就是上面的数据源
+      return item.competitionName ===  this.formData.paras.competitionName;//筛选出匹配数据
+    });
+    console.log(obj,'obj');
+    if (obj == undefined ) {
+      this.competitionId == ''
+    }else {
+      this.competitionId = obj.competitionId
+      console.log(this.competitionId,'this.competitionId');
+    }
+    this.getList()
     },
     /** 表格 */
-    getList() {
+    async getList() {
       setTimeout(() => {
         this.listLoading = false
       }, 3000)
-      this.formData.paras = this.util.nullValueFun(this.formData.paras)
-      getList('/trade-admin/api/judge/pageList', this.formData).then(response => {
-        if (response.code == 200) {
-          this.list = response.data.list
-          this.formData.totalRow = response.data.totalRow;
+      for (const key in this.formData.paras) { 
+        if (this.formData.paras[key] == '')  this.formData.paras[key] = null
+      }
+      try {
+        this.formData.totalRow = -1
+        const { data } = await getList('/trade-admin/api/judge/pageList', this.formData)
+          this.list = data.list
+          this.formData.totalRow = data.totalRow;
           this.listLoading = false
-        }
-      })
-    },
-
-    /** 添加菜单 */
-    addShow(row) {
-      this.dialogVisible = true
-      this.dialogType = 'new'
-      if (row == undefined) {
-        this.role.parentMenuId = 0
-      } else {
-        this.role.parentMenuId = row.menuId
+          
+      } catch (error) {
+        // this.$message.error('查询列表失败,数据为空')
+        this.loading = false
       }
-      this.$nextTick(() => {
-        this.$refs['formRole'].clearValidate()
-      })
     },
-    // handleCurrentChange(row) {
-    // 	this.parentMenuId = row.menuId
-    // },
-    /** 详情 */
-    editFun(row) {
-      this.dialogVisible = true
-      this.dialogType = 'edit'
-      // this.role = row;
-      this.role.menuId = row.menuId // 菜单标识
-      this.role.parentMenuId = row.parentMenuId // 父菜单标识
-      this.role.menuName = row.menuName // 菜单名称
-      this.role.menuFlag = row.menuFlag // 菜单标识 1 菜单  2 操作
-      this.role.menuUrl = row.menuUrl //
-      this.role.status = Number(row.status) // 状态 0 禁用 1 启用
-      this.role.orderNumber = row.orderNumber // 排序标识
-      this.role.menuList = row.menuList // 子级数组
-      this.role.menuIcon = row.menuIcon // 图标
-      this.role.hiddened = row.hiddened == true // 是否在左侧栏显示
-      this.$nextTick(() => {
-        this.$refs['formRole'].clearValidate()
-      })
-    },
-    /** 添加菜单 */
-    addFun() {
-      if (this.role.menuFlag != '1') {
-        this.role.hiddened = 'true'
-        this.role.menuIcon = ''
-      }
-      this.$refs['formRole'].validate((valid) => {
-        if (valid) {
-          this.loading = true
-          postFun('/trade-admin/api/menu/add', this.role).then(response => {
-            if (response.code == 200) {
-              this.loading = false
-              alertMsg('success', response.message)
-              this.handleClose()
-              /** 刷新表格 */
-              this.getList()
-            }
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          return false
-        }
-      })
-    },
-    /** 编辑菜单 */
-    modifyFun() {
-      if (this.role.menuFlag != '1') {
-        this.role.hiddened = 'true'
-        this.role.menuIcon = ''
-      }
-      this.$refs['formRole'].validate((valid) => {
-        if (valid) {
-          this.loading = true
-          postFun('/baas-admin/api/menu/modify', this.role).then(response => {
-            if (response.code == 200) {
-              this.loading = false
-              alertMsg('success', response.message)
-              this.handleClose()
-              /** 刷新表格 */
-              this.getList()
-            }
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          return false
-        }
-      })
-    },
-    /* 删除*/
-    deleteFun(menuId) {
-      /* 询问框*/
-      this.$confirm('是否删除此菜单', '确认信息', {
-        distinguishCancelAndClose: true,
-        confirmButtonText: '删除',
-        cancelButtonText: '取消',
-        confirmButtonClass: 'btndele',
-        type: 'warning'
-      }).then(() => {
-        /* 删除*/
-        postFun('/baas-admin/api/menu/delete', {
-          'menuId': menuId
-        }).then(response => {
-          if (response.code == 200) {
-            alertMsg('success', response.message)
-            /** 刷新表格 */
-            this.getList()
-          }
-        })
-      }).catch(action => {
-        return false
-      })
-    },
-    /** 关闭弹框 */
-    handleClose() {
-      this.dialogVisible = false
-      /** 恢复初始化数据 */
-      this.role = this.$options.data().role
-    },
-    onTreeDataChange(list) {
-      list.forEach((c, index) => {
-        this.updateOrderByMenuId.push({
-          'menuId': c.menuId, // 菜单ID
-          'orderNumber': index, // 排序号
-          'parentMenuId': c.parentMenuId
-        })
-        this.menuListFun(c, index)
-      })
-      this.treeData.lists = list
-
-      /* 排序*/
-      postFun('/baas-admin/api/menu/updateOrderByMenuId', this.updateOrderByMenuId).then(response => {
-        if (response.code == 200) {
-          alertMsg('success', response.message)
-          /** 刷新表格 */
-          this.getList()
-          this.updateOrderByMenuId = []
-        }
-      })
+    /* 重置 */
+    reset() {
+      for (const key in this.formData.paras) { this.formData.paras[key] = ''}
+      this.getList()
     },
     // 多选框选中的内容id
     changeFun(val) {

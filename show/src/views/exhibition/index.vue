@@ -4,7 +4,7 @@
       title="作品展示厅"
       title-right=""
       description="美感与设计的结合，尽在此时"
-      :url="backgroundUrl"
+      :background="backgroundUrl"
       :crumb="[{title: '作品展示厅', link: 'exhibition'}]"
     />
     <div class="exhibition-container1">
@@ -121,8 +121,6 @@
         this.getCompetitionListData()
         // 获取筛选列表
         this.getDictData()
-        // 获取作品列表
-        this.getList()
       },
       // 翻页
       handlePageNumber(pageNumber) {
@@ -140,7 +138,7 @@
             this.total = response.data.totalRow
             for (let item of dataList) {
               const obj = {
-                eventName: "中华商标大赛",
+                eventName: "正在评比中",
                 picture: item.worksJpgUrl,
                 name: item.worksName,
                 author: item.worksDesigner,
@@ -169,8 +167,9 @@
             }
             if (this.competitionList) {
               this.formData.paras.competitionId = this.competitionList[0].value
-              // 获取其它数据
             }
+            // 获取作品列表
+            this.getList()
           } else {
             this.$message.error(message)
           }

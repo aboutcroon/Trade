@@ -16,27 +16,27 @@
       </gray-block>
     </div>
     <!-- 评审用户页 -->
-    <div
+    <!-- <div
       v-else
       class="user-control container"
-    >
+    > -->
       <!-- <UserTitle
         title="评审作品管理"
         description="美感与设计的结合，尽在此时"
         :stat-list="statList"
         :show-avatar="false"
       /> -->
-      <phase :activeNum="activeNum"></phase>
+      <!-- <phase :activeNum="activeNum"></phase> -->
       <!-- <JudgingRules class="margin-bottom-30" /> -->
-      <ReviewContent />
-    </div>
+      <ReviewContent v-else/>
+    <!-- </div> -->
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import GrayBlock from "./components/GrayBlock.vue";
 import UserTitle from "./components/UserTitle.vue";
-import phase from "./components/phase.vue";
+// import phase from "./components/phase.vue";
 import JudgingRules from './components/JudgingRules.vue';
 import userContent from './components/TradeList.vue'
 import ReviewContent from "./components/ReviewList.vue";
@@ -47,7 +47,7 @@ export default {
     JudgingRules,
     userContent,
     ReviewContent,
-    phase
+    // phase
   },
   data() {
     return {

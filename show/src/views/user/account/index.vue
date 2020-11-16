@@ -81,7 +81,7 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false" class="btn">取 消</el-button>
+        <el-button @click="handleClose" class="btn">取 消</el-button>
         <el-button type="primary" @click="modifyFun" class="btn">确 定</el-button>
       </span>
     </el-dialog>
@@ -180,12 +180,20 @@ export default {
     handleClick() {},
     /**修改密码 */
     modifyFun() {
-      postFun("/trade-web/api/user/modifyPassword", this.ruleForm).then(res => {
-        if (res.code == 200) {
-          this.dialogVisible = false;
-          this.$message.success(res.message);
+      this.$refs['ruleForm'].validate(valid => {
+        if (valid) {
+          postFun("/trade-web/api/user/modifyPassword", this.ruleForm).then(
+            res => {
+              if (res.code == 200) {
+                this.dialogVisible = false;
+                this.$message.success(res.message);
+              } else {
+                this.$message.error(res.message);
+              }
+            }
+          );
         } else {
-          this.$message.error(res.message);
+          return false;
         }
       });
     },
@@ -205,7 +213,13 @@ export default {
         }
       });
     },
-    handleClose() {}
+    handleClose() {
+      this.dialogVisible = false;
+      this.ruleForm.oldPassword = "";
+      this.ruleForm.password = "";
+      this.ruleForm.confirmPassword = "";
+      this.$refs["ruleForm"].resetFields();
+    }
   }
 };
 </script>

@@ -24,7 +24,7 @@
           <el-input
             ref="username"
             v-model.trim="form.username"
-            placeholder="请输入用户名"
+            placeholder="请输入账号"
             @input="form.username = form.username.replace(/[^\a-\z\A-\Z0-9_]/g, '')"
             @keyup.enter.native="autoFoucs('mobile')"
             maxlength="20"
@@ -47,7 +47,7 @@
             ref="password"
             v-model.trim="form.password"
             placeholder="请输入密码"
-            @input="form.password = form.password.replace(/[\u4e00-\u9fa5]/g, '')"
+            @input="form.password = form.password.replace(/[\u4e00-\u9fa5]\s/g, '')"
             @keyup.enter.native="autoFoucs('confirmPassword')"
             maxlength="16"
             show-password
@@ -58,7 +58,7 @@
             ref="confirmPassword"
             v-model.trim="form.confirmPassword"
             placeholder="请输入确认密码"
-            @input="form.confirmPassword = form.confirmPassword.replace(/[\u4e00-\u9fa5]/g, '')"
+            @input="form.confirmPassword = form.confirmPassword.replace(/[\u4e00-\u9fa5\s]/g, '')"
             @keyup.enter.native="autoFoucs('captcha')"
             maxlength="16"
             show-password
@@ -238,7 +238,6 @@ export default {
         if (valid) {
           this.addUser()
         } else {
-          /* this.$message.error('请正确填写注册信息！'); */
           return false;
         }
       })
@@ -256,6 +255,7 @@ export default {
           const message = response.message
           if (status === '200' || status === 200) {
             this.$message.success('注册成功');
+            this.$router.push({name: 'Login'})
           } else {
             this.getVerificationCode()
             this.$message.error(message);

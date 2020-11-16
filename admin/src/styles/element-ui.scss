@@ -135,13 +135,6 @@
   max-width: calc(100% - 30px);
   display: flex;
   flex-direction: column;
-
-  >.el-dialog__body {
-    overflow: auto;
-    // overflow-y: scroll;
-    max-height: 400px;
-    color: #666666;
-  }
 }
 
 /*预览按钮*/

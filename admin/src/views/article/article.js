@@ -105,6 +105,7 @@ export default {
     }
   },
   methods: {
+    
       /* 初始化数据 */
     initData () {
       /** 传-1 后台计算总条数 */
@@ -116,9 +117,6 @@ export default {
     },
       /** 表格 */
     getList() {
-      setTimeout(() => {
-        this.listLoading = false
-      }, 3000)
       this.formData.paras = this.util.nullValueFun(this.formData.paras)
       getList('/trade-admin/api/article/pageList', this.formData).then(response => {
         if (response.code == 200) {
@@ -129,7 +127,10 @@ export default {
         }
       })
     },
-
+    reset() {
+      for (const key in this.formData.paras) {this.formData.paras[key] = ''}
+      this.getList()
+    },
     /** 添加菜单 */
     addShow(row) {
       this.dialogVisible = true
@@ -148,10 +149,21 @@ export default {
     // },
     /** 详情 */
     editFun(row) {
+      console.log(row);
+      this.$refs.addEditor.addShow()
+      console.log(' this.$refs.addEditor: ',  this.$refs.addEditor);
+      this.$refs.addEditor.imageUrl =  process.env.VUE_APP_IMGURL +  row.coverUrl
+      this.$refs.addEditor.form.articleTitle = row.articleTitle
+      this.$refs.addEditor.form.articleTag = row.articleTag
+      this.$refs.addEditor.form.articleSummary = row.articleSummary
+      this.$refs.addEditor.form.articleContent = row.articleContent
+      this.$refs.addEditor.form.articleColumn = row.articleColumn
+      this.$refs.addEditor.form.orderNumber = row.orderNumber
+      this.$refs.addEditor.form.articleId = row.articleId
+      this.$refs.addEditor.form.status = row.status
       this.dialogVisible = true
       this.dialogType = 'new'
       this.role = row;
-      
       // this.$nextTick(() => {
       //   this.$refs['formRole'].clearValidate()
       // })
@@ -207,9 +219,9 @@ export default {
       })
     },
     /* 删除*/
-    deleteFun(menuId) {
+    deleteFun(articleIdList) {
       /* 询问框*/
-      this.$confirm('是否删除此菜单', '确认信息', {
+      this.$confirm('是否删除此文章', '确认信息', {
         distinguishCancelAndClose: true,
         confirmButtonText: '删除',
         cancelButtonText: '取消',
@@ -218,7 +230,7 @@ export default {
       }).then(() => {
         /* 删除*/
         postFun('/trade-admin/api/article/delete', {
-          'menuId': menuId
+          'articleIdList': [articleIdList]
         }).then(response => {
           if (response.code == 200) {
             alertMsg('success', response.message)

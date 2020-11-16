@@ -154,7 +154,11 @@
                 <img src="../../assets/img/homePhoto2.png" @click="readHonor" v-show="honorId === 3">
                 <img src="../../assets/img/homePhoto3.png" @click="readHonor" v-show="honorId === 4">
                 <img src="../../assets/img/homePhoto2.png" @click="readHonor" v-show="honorId === 5">
-                <div class="honor_text">奖状与奖杯（金奖独有）</div>
+                <div class="honor_text" v-show="honorId === 1">奖状与奖杯（金奖独有）</div>
+                <div class="honor_text" v-show="honorId === 2">获奖作品颁发区块链版权数字证书（直通互联网法院，图片存证即上链）</div>
+                <div class="honor_text" v-show="honorId === 3">参加颁奖典礼（为用户提供展示自身形象和实力的机会）</div>
+                <div class="honor_text" v-show="honorId === 4">获奖作品收录设计时代杂志专刊（提升企业或个人在该领域的影响力，塑造个人知名度和美誉度）</div>
+                <div class="honor_text" v-show="honorId === 5">获奖作品入驻设计大赛知识产权知识产权运营管理平台（一站式直达服务，省去中间环节）</div>
                 <div class="honor_bottom">
                     <i class="iconfont iconjiantou_left" :class="{ isActive: honorId!== 1 }" @click="lastHonor"></i>
                     <div>0{{ honorId }}</div>
@@ -168,10 +172,20 @@
             <div class="sloganEig">About the competition</div>
             <div class="competition">
                 <img src="../../assets/img/homePhoto3.png">
-                <div>大赛历史与发展</div>
-                <div>
-                    中华商标创意设计大赛是由与中华商标协会、中国网、中国教育电视台联合主办，面向世界优秀的设计人才和设计团队的, 立足大中华地区影响国际,
-                    旨在帮助解决商标设计，各地区以地理标志为支撑的特色经济产业广，知识产权确权与保护等问题
+                <div class="title">大赛背景</div>
+                <div class="text">
+                    党的十九大报告明确提出要倡导创新文化，强化知识产权创造、保护、运用。商标是知识产权的重要组成部分，强化商标创造、保护、运用，大力培育和弘扬商标文化，提高企业商标创新意识，激发商标设计者创新热情，是推动知识产权强国和创新型国家建设的必然途径
+                </div>
+                <div class="title">大赛简介</div>
+                <div class="text">
+                    中华商标（国际）创意设计大赛是由中华商标协会与中国教育电视台联合主办，面向世界优秀设计人才和设计团队，特别是各大艺术设计院校、职业学校学生的中国唯一专业性商标设计大赛，是立足大中华地区影响国际的赛事
+                </div>
+                <div class="text" v-html="'&#8226  大赛采用多种赛制进行参赛作品筛选'"></div>
+                <div class="text" v-html="'&#8226  评委由资深设计界、商业界、企业界专家组成'"></div>
+                <div class="text" v-html="'&#8226  奖项由中华商标协会进行颁发'"></div>
+                <div class="title">大赛宗旨</div>
+                <div class="text">
+                    培育商标设计人才。通过大赛进一步发掘优秀的设计人才和设计团队，在创业场地、资金和政策方面予以扶持，培育和孵化一批优秀设计师和设计团队
                 </div>
             </div>
             <div class="backgroundTwo"></div>
@@ -189,43 +203,11 @@
             <div class="sloganTen">Hot News</div>
 
             <div class="allNews">
-                <div class="allNews_whole" @click="readAllNews">
-                    <div class="allNews_title">
-                        环球网快讯]刚刚，共和党总统候选人特朗普连
-                        发五条推文，抱怨宾夕法尼亚州计票“不公”
-                    </div>
-                    <div class="allNews_text">
-                        特朗普先是写道：“‘这是我们所知道的。我们必须回到州一级来看看这个泥沼最初是如何形成的
-                        特朗普先是写道：“‘这是我们所知道的。我们必须回到州一级来看看这个泥沼最初是如何形成的
-                    </div>
-                    <img src="../../assets/img/news2.png">
-                    <div class="allNews_type">中华商标协会官方</div>
-                    <div class="allNews_read">阅读原文</div>
-                </div>
-                <div class="allNews_whole" @click="readAllNews">
-                    <div class="allNews_title">
-                        环球网快讯]刚刚，共和党总统候选人特朗普连
-                        发五条推文，抱怨宾夕法尼亚州计票“不公”
-                    </div>
-                    <div class="allNews_text">
-                        特朗普先是写道：“‘这是我们所知道的。我们必须回到州一级来看看这个泥沼最初是如何形成的
-                        特朗普先是写道：“‘这是我们所知道的。我们必须回到州一级来看看这个泥沼最初是如何形成的
-                    </div>
-                    <img src="../../assets/img/news2.png">
-                    <div class="allNews_type">中华商标协会官方</div>
-                    <div class="allNews_read">阅读原文</div>
-                </div>
-                <div class="allNews_whole" @click="readAllNews">
-                    <div class="allNews_title">
-                        环球网快讯]刚刚，共和党总统候选人特朗普连
-                        发五条推文，抱怨宾夕法尼亚州计票“不公”
-                    </div>
-                    <div class="allNews_text">
-                        特朗普先是写道：“‘这是我们所知道的。我们必须回到州一级来看看这个泥沼最初是如何形成的
-                        特朗普先是写道：“‘这是我们所知道的。我们必须回到州一级来看看这个泥沼最初是如何形成的
-                    </div>
-                    <img src="../../assets/img/news2.png">
-                    <div class="allNews_type">中华商标协会官方</div>
+                <div class="allNews_whole" @click="readAllNews(item.articleId)" v-for="item in newsList" :key="item.articleId">
+                    <div class="allNews_title">{{ item.articleTitle }}</div>
+                    <div class="allNews_text">{{item.articleContent}}</div>
+                    <img :src="item.coverUrl">
+                    <div class="allNews_type">{{item.articleTag}}</div>
                     <div class="allNews_read">阅读原文</div>
                 </div>
 
@@ -261,6 +243,7 @@ import RightPanel from '../components/RightPanel/index'
 import FootBottom from '../components/FootBottom/index'
 import {mapGetters, mapMutations} from 'vuex'
 import {guestsType} from "@/store/getters";
+import {postFun} from "@/api/transit";
 
 export default {
     components: {
@@ -329,7 +312,13 @@ export default {
             showDetail5: false,
             load: true,             // 是否展示加载更多按钮
             showMoreGuests: false,  // 是否展示更多嘉宾
-            honorId: 1              // 当前获奖者荣誉图片
+            honorId: 1,             // 当前获奖者荣誉图片
+            // 初始化接口数据
+            initData: {
+                pageNumber: 1,
+                pageSize: 5
+            },
+            newsList: []            // 新闻列表
         }
     },
     computed: {
@@ -343,6 +332,7 @@ export default {
         this.setActivePage(1)   // 修改当前激活的页面
         // this.setHonorType(1)    // 修改当前激活的获奖者荣誉图片
         this.honorId = this.honorType
+        this.initNews()
     },
     methods: {
         ...mapMutations({
@@ -367,11 +357,11 @@ export default {
             this.load = false
         },
         // 跳转到首页->全部新闻
-        readAllNews() {
+        readAllNews(key) {
             this.$router.push({
                 name: 'homeAllNews',
                 query: {
-                    'allNewsId': 2
+                    'allNewsId': key
                 }
             })
             this.setActivePage(6)
@@ -421,6 +411,11 @@ export default {
         },
         toNewsCenter() {
             this.$router.push('/newsCenter')
+        },
+        // 获取新闻列表
+        async initNews() {
+            const {data: res} = await postFun('/trade-web/api/article/pageList', this.initData)
+            this.newsList = res.list.slice(0, 3)    // 首页只展示有限个
         },
         // 嘉宾介绍下拉
         handleDetail1() {
@@ -706,8 +701,8 @@ export default {
             }
 
             .honor_text {
-                @include wh(47.436067vw, 5.300119vw);
                 @include font(3.710083vw, 5.300119vw, Bold);
+                width: 78.176759vw;
                 color: #FFFFFF;
                 position: absolute;
                 bottom: 2.65006vw;
@@ -790,22 +785,24 @@ export default {
                 @include wh(88.776997vw, 44.786008vw);
             }
 
-            div:nth-of-type(1) {
+            .title {
                 @include wh(100%, 6.095137vw);
                 @include font(4.240095vw, 6.095137vw, 500);
                 color: #454545;
+                margin-top: 3.975089vw;
             }
 
-            div:nth-of-type(2) {
-                @include wh(100%, 35.775805vw);
+            .text {
                 @include font(3.710083vw, 6.890155vw);
+                width: 100%;
                 color: #636363;
                 letter-spacing: 0.212005vw;
+                margin-top: 1.060024vw;
             }
         }
 
         .backgroundTwo {
-            @include wh(100%, 73.141646vw);
+            @include wh(100%, 177.023983vw);
             position: relative;
             background-color: #F5F5F5;
             margin-top: 136.478071vw;
@@ -962,6 +959,7 @@ export default {
 
         .allNews {
             margin-top: 54.591228vw;
+            height: 138.863124vw;
 
             .allNews_whole {
                 @include wh(100%, 40.545912vw);

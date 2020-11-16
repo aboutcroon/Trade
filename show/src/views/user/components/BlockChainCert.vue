@@ -15,7 +15,7 @@
         <span class="cert-title">参与奖项:</span>
         <span class="cert-data">{{prizeName}}</span>
         <span class="cert-title">作品类型:</span>
-        <span class="cert-data">{{propertyName}}</span>
+        <span class="cert-data">{{categoryName}}</span>
       </div>
     </div>
     <el-form class="cert-form-bottom" labelWidth="72px">
@@ -44,15 +44,33 @@
         backgroundUrl: require("@/assets/img/exhibition_background.jpg"),
         worksJpgUrl: '',
         //证书数据
-        worksName: 'svetex',
-        worksDesigner: '潘金强',
-        prizeName: '大赛新秀奖',
-        propertyName: 'LOGO设计',
+        worksName: '',
+        worksDesigner: '',
+        prizeName: '',
+        categoryId: '0',
+        categoryName: '',
 
-        czContent: '0x75ecbfce26fa8b6ea0a14332795a054',
-        blockNumber: '12345',
-        czHash: '0x75ecbfce26fa8b6ea0a14332795a054f7d892aa4e923ed0e4fa8482bc88a2cf1',
-        chainTime: '2020-09-24 10:24',
+        czContent: '',
+        blockNumber: '',
+        czHash: '',
+        chainTime: '',
+
+        // 类型map
+        typeMap: {
+          category: {
+            '0': '',
+            '1': '',
+            '2': '',
+            '3': '',
+            '4': '',
+            '5': '',
+            '6': '',
+            '7': '',
+            '8': '',
+            '9': '',
+            '10': '',
+          }
+        }
       }
     },
     mounted() {
@@ -62,6 +80,7 @@
       init() {
         let worksId = this.$route.query.worksId
         this.getCertData(worksId)
+        this.getDictData()
       },
       // 加载数据
       getCertData(worksId) {
@@ -73,7 +92,8 @@
             let data = response.data
             this.worksName = data.worksName
             this.worksDesigner = data.worksDesigner
-            this.propertyName = data.worksPropertyId
+            this.categoryId = data.categoryId
+            this.categoryName = this.typeMap.category[this.categoryId]
             this.czContent = data.czContent
             this.blockNumber = data.blockNumber
             this.czHash = data.czHash
@@ -86,9 +106,30 @@
           }
         })
       },
+      // 获取类型列表
+      getDictData() {
+        this.getDict().then(response => {
+          if (response.code === '200' || response.code === 200) {
+            let data = response.data
+            let typeList = {}
+            for (let i of data['作品类型']) {
+              typeList[i.key] = i.value
+            }
+            this.typeMap.category = typeList
+            this.categoryName = this.typeMap.category[this.categoryId]
+
+          } else {
+            this.$message.error(message)
+          }
+        })
+      },
       getCert(param) {
         return postFun('/trade-web/api/works/selectCzByWorksId', param)
-      }
+      },
+      // 获取筛选列表
+      getDict(param) {
+        return getFun('/trade-web/api/dict', param)
+      },
     }
   };
 </script>

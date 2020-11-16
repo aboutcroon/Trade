@@ -31,37 +31,37 @@
         </div>
         <p>{{opus.worksDescription}}</p>
         <div style="float:right" v-if="(opus.worksStatus !== '未复审' && opus.worksStatus !== '已评分' && opus.worksStatus !== '已获奖')">
-          <el-button class="btn-opus icon iconfont iconchehuisekuai">&nbsp;驳回</el-button>
-          <el-button class=" icon iconfont iconactivated btn-opus sucessbtn">&nbsp;通过</el-button>
+          <el-button class="btn-opus icon iconfont iconchehuisekuai" @click="deleteFun">&nbsp;驳回</el-button>
+          <el-button class=" icon iconfont iconactivated btn-opus sucessbtn" @click="adoptFun">&nbsp;通过</el-button>
         </div>
       </div>
     </div>
-    <div class="ratebox"  v-if="opus.worksStatus == '未复审'">
+    <div class="ratebox"  v-if="opus.worksStatus == '未复审'||opus.worksStatus == '已评分' ||opus.worksStatus == '已获奖'">
       <div class="point">
         <p>作品打分</p>
         <span>初审完成后可评价</span>
       </div>
       <div class="rate">
         <div style="display:flex;padding-bottom:5px;">
-          主旨<el-rate v-model="rate.a" style="margin-left:10px;" show-score text-color="#ff9900" score-template="{value}"  :allow-half="true" ></el-rate>
+          主旨<el-rate :disabled="opus.worksStatus == '已评分' || opus.worksStatus == '已获奖'" v-model="rate.starPurpose" style="margin-left:10px;" show-score text-color="#ff9900" score-template="{value}"  :allow-half="true" ></el-rate>
         </div>
         <div style="display:flex;padding-bottom:5px;">
-          创意<el-rate v-model="rate.b" style="margin-left:10px;" show-score text-color="#ff9900" score-template="{value}" :allow-half="true" ></el-rate>
+          创意<el-rate :disabled="opus.worksStatus == '已评分' || opus.worksStatus == '已获奖'"  v-model="rate.starIdea" style="margin-left:10px;" show-score text-color="#ff9900" score-template="{value}" :allow-half="true" ></el-rate>
         </div>
          <div style="display:flex;padding-bottom:5px;">
-          设计<el-rate v-model="rate.c" style="margin-left:10px;" show-score text-color="#ff9900" score-template="{value}"  :allow-half="true" ></el-rate>
+          设计<el-rate :disabled="opus.worksStatus == '已评分' || opus.worksStatus == '已获奖'"  v-model="rate.starDesign" style="margin-left:10px;" show-score text-color="#ff9900" score-template="{value}"  :allow-half="true" ></el-rate>
         </div>
          <div style="display:flex;padding-bottom:5px;">
-          易用<el-rate v-model="rate.d" style="margin-left:10px;" show-score text-color="#ff9900" score-template="{value}" :allow-half="true" ></el-rate>
+          易用<el-rate :disabled="opus.worksStatus == '已评分' || opus.worksStatus == '已获奖'"  v-model="rate.starUsability" style="margin-left:10px;" show-score text-color="#ff9900" score-template="{value}" :allow-half="true" ></el-rate>
         </div>
          <div style="display:flex;padding-bottom:5px;">
-          口碑<el-rate v-model="rate.e" style="margin-left:10px;" show-score text-color="#ff9900" score-template="{value}" :allow-half="true" ></el-rate>
+          口碑<el-rate :disabled="opus.worksStatus == '已评分' || opus.worksStatus == '已获奖'"  v-model="rate.starBrand" style="margin-left:10px;" show-score text-color="#ff9900" score-template="{value}" :allow-half="true" ></el-rate>
         </div>
         <div style="display:flex;padding-bottom:5px;">
-          延展<el-rate v-model="rate.f" style="margin-left:10px;" show-score text-color="#ff9900" score-template="{value}" :allow-half="true" ></el-rate>
+          延展<el-rate :disabled="opus.worksStatus == '已评分' || opus.worksStatus == '已获奖'"  v-model="rate.starExtension" style="margin-left:10px;" show-score text-color="#ff9900" score-template="{value}" :allow-half="true" ></el-rate>
         </div>
       </div>
-      <div style="margin-top:10px"> 
+      <div style="margin-top:10px"  v-if="opus.worksStatus == '未复审'"> 
         <el-button size="small" @click="rateHandle">确认评分</el-button>
       </div>
     </div>
@@ -76,13 +76,25 @@ export default {
   data() {
     return {
       opus:{},// 作品信息对象
-      rate: {}, // 临时测试评分用的对象
+      rate: {
+        starBrand:'',
+        starDesign:'',
+        starExtension:'',
+        starPurpose:'',
+        starUsability:'',
+        starPurpose:'',
+      }, // 临时测试评分用的对象
       id:'',
+      worksStatus:'',
     };
   },
   activated() {
     this.id = this.$store.state.export.worksId
+    this.worksStatus = this.$store.state.export.worksStatus
+    this.str = this.$store.state.export.str
     this.getDetails()
+    console.log(this.worksStatus);
+    console.log(this.str);
   },
   filters: {
     statusFilter(val) {
@@ -99,17 +111,93 @@ export default {
   },
   methods: {
     async rateHandle() {
-      const rateData = parseInt(this.rate.a) + parseInt(this.rate.b) + parseInt(this.rate.c) + parseInt(this.rate.d) + parseInt(this.rate.e) + parseInt(this.rate.f)  
-      const { data } = await postFun('/trade-admin/api/judge/score',{worksId:this.id,starCount:rateData})
+      let rateData =  {
+        starBrand:this.rate.starBrand,
+        starDesign:this.rate.starDesign,
+        starExtension:this.rate.starExtension,
+        starIdea:this.rate.starIdea,
+        starPurpose:this.rate.starPurpose,
+        starUsability:this.rate.starUsability,
+        worksId:this.id
+      }
+      const { data } = await postFun('/trade-admin/api/judge/score',rateData)
       this.$message.success('评分成功')
       this.$store.dispatch('tagsView/delView', this.$route)
       this.$router.go(-1)
+    },
+     /* 驳回*/
+    deleteFun(row) {
+      /* 询问框*/
+      this.$confirm('是否驳回此作品', '确认信息', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '驳回',
+        cancelButtonText: '取消',
+        confirmButtonClass: 'btndele',
+        type: 'warning'
+      }).then(() => {
+        /* 删除*/
+       let status = ''
+         if(this.str == '初筛') {
+            status = '2'
+         }
+        postFun('/trade-admin/api/judge/operate',{
+          worksStatus:status,
+          worksIdList:Array(this.id)
+        }).then(res=>{
+            if(this.str == '初筛') {
+            this.opus.worksStatus = '初筛驳回'
+         }else {
+            this.opus.worksStatus = '初审驳回'
+         }
+         this.$message.success('已驳回')
+        })
+      }).catch(action => {
+        return false
+      })
+    },
+     /** 通过 */
+    adoptFun(row) {
+      console.log(row,'初筛通过');
+      this.$confirm('确认通过？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let status = ''
+         if(this.str == '初筛') {
+            status = '1'
+         }
+        postFun('/trade-admin/api/judge/operate',{
+           worksStatus:status,
+          worksIdList:Array(this.id)
+        }).then(res=>{
+           if(this.str == '初筛') {
+            this.opus.worksStatus = '初筛通过'
+         }else {
+            this.opus.worksStatus = '初审通过'
+         }
+         this.$message.success('已通过')
+
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消确定'
+        });          
+      });
     },
     async getDetails(){
       const { data } = await postFun('/trade-admin/api/judge/selectWorksById',{worksId:this.id})
       this.opus = data // 作品信息
       this.opus.imgurl =  process.env.VUE_APP_IMGURL + data.worksJpgUrl // 作品图片
       this.opus.worksStatus = this.filterWorksStatus(data.worksStatus) // 过滤
+      this.rate
+      this.rate.starBrand = data.starBrand
+      this.rate.starDesign = data.starDesign
+      this.rate.starExtension = data.starExtension
+      this.rate.starIdea = data.starBrand
+      this.rate.starPurpose = data.starPurpose
+      this.rate.starUsability = data.starUsability
     },
     filterWorksStatus (status) {
     //状态 0-未初筛 1-初筛通过 2-初筛驳回 3-未初审 4-初审通过 5-初审驳回 6-未复审 7-已评分 8-已获奖

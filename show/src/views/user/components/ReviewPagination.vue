@@ -4,7 +4,7 @@
       background
       layout="prev, pager, next"
       :current-page="currentPage"
-      :page-size="10"
+      :page-size="pageSize"
       :total="total"
       @current-change="handleCurrentChange"
     > </el-pagination>
@@ -23,6 +23,10 @@
         required: true,
         type: Number
       },
+      pageSize:{
+        required: true,
+        type: Number
+      }
     },
     computed: {
       currentPage: {

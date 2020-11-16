@@ -12,18 +12,21 @@
         </div>
 
         <transition>
-          <div class="maskBox" v-if="show" v-show="type != 5 && type != 4">
+          <div class="maskBox" v-if="show">
             <div class="roundBox">
               <el-button
                 class="btn c00B3B3"
+                v-show="judgeStage == 2"
                 round
                 @click="updateStatuFun($event,dataObj.worksId,4)"
               >通过</el-button>
               <el-button
                 class="btn cB30000"
+                v-show="judgeStage == 2"
                 round
                 @click="updateStatuFun($event,dataObj.worksId,5)"
               >驳回</el-button>
+              <el-button v-show="judgeStage == 3" class="btn c00B3B3" round>评分</el-button>
             </div>
           </div>
         </transition>
@@ -60,13 +63,16 @@ export default {
     },
     link: {
       type: String
+    },
+    judgeStage: {
+      type: Number,
+      default: 1
     }
   },
   data() {
     return {
       show: false,
       type: 1
-      
     };
   },
   mounted() {
@@ -75,7 +81,7 @@ export default {
   },
   methods: {
     pageFun(link) {
-      this.$router.push({ path: link, query: { index: this.dataObj.worksId } });
+      this.$router.push({ path: link, query: { index: this.dataObj.worksId,judgeStage:this.judgeStage } });
     },
     updateStatuFun(e, id, type) {
       if (e.stopPropagation) {
@@ -92,7 +98,7 @@ export default {
         if (res.code == 200) {
           this.$message.success(res.message);
           this.$emit("getList");
-        }else{
+        } else {
           this.$message.error(res.message);
         }
       });
@@ -106,6 +112,7 @@ export default {
   position: relative;
   width: 25%;
   float: left;
+  cursor: pointer;
 }
 .content {
   width: 100%;

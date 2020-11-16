@@ -19,7 +19,7 @@
           :key="index"
           class="nav-list-item"
           active-class="active"
-          :to="item.link"
+          :to="{ name: item.link }"
           exact
           @click="clickLink()"
         >
@@ -96,11 +96,11 @@ export default {
       mask: false,
       /* 默认导航 */
       linkList: [
-        { name: '首页', link: '/' },
-        { name: '第四届大赛', link: '/game' },
-        { name: '作品展示厅', link: '/exhibition' },
-        { name: '新闻中心', link: '/news' },
-        { name: '合作伙伴', link: '/partner' },
+        { name: '首页', link: 'home' },
+        { name: '第四届大赛', link: 'game' },
+        { name: '作品展示厅', link: 'exhibition' },
+        { name: '新闻中心', link: 'news' },
+        { name: '合作伙伴', link: 'partner' },
       ],
       dropList: [],
       isFixed: false,
@@ -153,30 +153,30 @@ export default {
     getNavList() {
       let type = this.userinfo.roleType
       const navList = [
-        { name: '首页', link: '/' },
-        { name: '第四届大赛', link: '/game' },
-        { name: '作品展示厅', link: '/exhibition' },
-        { name: '新闻中心', link: '/news' },
-        { name: '合作伙伴', link: '/partner' },
+        { name: '首页', link: 'home' },
+        { name: '第四届大赛', link: 'game' },
+        { name: '作品展示厅', link: 'exhibition' },
+        { name: '新闻中心', link: 'news' },
+        { name: '合作伙伴', link: 'partner' },
       ]
       if (type === 5 || type === 4) {
         /* 普通/机构用户 */
         this.linkList = [
           ...navList,
-          { name: '个人中心', link: '/user' },
+          { name: '个人中心', link: 'userControl' },
         ]
-        this.dropList = [
-          { name: '个人中心', link: '' }
-        ]
+        // this.dropList = [
+        //   { name: '个人中心', link: '' }
+        // ]
       } else if (type === 3 || type === 2) {
         /* 主评委/副评委 */
         this.linkList = [
           ...navList,
-          { name: '评委控制台', link: '/user' },
-          this.dropList = [
-            { name: '评委控制台', link: '' }
-          ]
+          { name: '评委控制台', link: 'userControl' },
         ]
+        // this.dropList = [
+        //   { name: '评委控制台', link: '' }
+        // ]
       }
     },
     /* 初始化滚动监听事件 */
@@ -324,7 +324,7 @@ export default {
 
   border: none;
   .el-dropdown-menu__item {
-    min-width: 108px;
+    min-width: 112px;
     line-height: 40px;
     border-bottom: 1px solid #e5e5e5;
     &:last-of-type {

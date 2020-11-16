@@ -6,20 +6,17 @@
 
         <div class="content">
             <div class="item">
-                <img src="../../assets/img/news2.png">
-                <div class="text_title">示范区与约瑟基金开将获得中示范区</div>
-                <div class="text_type">中华商标协会官方</div>
+                <img :src="news.coverUrl">
+                <div class="text_title">{{news.articleTitle}}</div>
+                <div class="text_type">{{news.articleTag}}</div>
                 <div class="text_time">
                     <span style="font-weight: 500">发布时间：</span>
-                    <span>2020/10/28 上午11:12</span>
+                    <span>{{news.createTime}}</span>
                 </div>
-                <div class="text_detail">
-                    中华商标（国际）创意设计大赛的获奖者除了能获得奖状、奖杯外，中华商标（国际）创意设计大赛设计作品将获得中华商标协会、中国教育电视台的权威认证
-                    中华商标（国际）创意设计大赛的获奖者除了能获得奖状、奖杯外，中华商标（国际）创意设计大赛设计作品将获得中华商标协会、中国教育电视台的权威认证
-                </div>
+                <div class="text_detail">{{news.articleContent}}</div>
                 <div class="text_people">
                     <i class="iconfont iconeye"></i>
-                    2324人
+                    {{news.visitNumber}}人
                 </div>
             </div>
         </div>
@@ -28,10 +25,36 @@
 
 <script>
 import RightPanel from '../components/RightPanel/index'
+import {postFun} from "@/api/transit";
+
 export default {
     name: "allNews",
+    data() {
+        return {
+            // 初始化接口数据
+            initData: {
+                pageNumber: 1,
+                pageSize: 5
+            },
+            news: {}        // 当前新闻
+        }
+    },
+    mounted() {
+        this.initNews()
+    },
     components: {
         RightPanel
+    },
+    methods: {
+        async initNews() {
+            const {data: res} = await postFun('/trade-web/api/article/pageList', this.initData)
+            res.list.forEach((item, index) => {
+                // 传过来的allNewsId值与当前新闻列表的articleId进行匹配，展示当前新闻
+                if (item.articleId === this.$route.query.allNewsId) {
+                    this.news = item
+                }
+            })
+        },
     }
 }
 </script>

@@ -45,7 +45,6 @@ export default {
       list:[],
       formData: {
         paras: {
-          worksName:'',//作品名称	
           competitionName:'',//赛事名称	
           categoryName:'',//赛事类型	
           propertyName:'',//作品属性	
@@ -56,12 +55,13 @@ export default {
           startTime:'',//上传开始时间	
           endTime:'',//上传结束时间	
           userName:'',//用户名
-          worksStatusList:[6,7,8]
+          worksStatusList:[6,7]
         },
         pageSize: 10,
         pageNumber: 1,
         totalRow: -1
       },
+      competitionId:'',//当前大赛id
       // /* 奖项类型*/
       // stateList: [],
       // /* 赛事名称 */
@@ -170,50 +170,62 @@ export default {
       /** 分页默认从第一页开始 */
       this.formData.pageNumber = 1
       this.dictDataFun()
-      this.getList()
-      // this.selectFun()
+      this.gamesNameList()
+    },
+    /** 大赛名称接口 */
+    async gamesNameList(){
       const { data } = await getFun('/trade-admin/api/competition/list')
+      console.log(data,'大赛名称');
       this.gamesList = data
+      this.formData.paras.competitionName = data[0].competitionName // 默认选择第一个大赛,产品要求!
+      // this.competitionId = data[0].competitionId // 默认选择第一个大赛,产品要求!
+      this.sl()
+    },
+    sl(e){
+      console.log(e,'val');
+      let obj = {};
+      obj = this.gamesList.find((item)=>{//model就是上面的数据源
+      return item.competitionName ===  this.formData.paras.competitionName;//筛选出匹配数据
+    });
+    console.log(obj,'obj');
+    if (obj == undefined ) {
+      this.competitionId == ''
+    }else {
+      this.competitionId = obj.competitionId
+      console.log(this.competitionId,'this.competitionId');
+    }
+    this.getList()
     },
     /** 表格 */
-    getList() {
+    async getList() {
       setTimeout(() => {
         this.listLoading = false
       }, 3000)
-      this.formData.paras = this.util.nullValueFun(this.formData.paras)
-      getList('/trade-admin/api/judge/pageList', this.formData).then(response => {
-        if (response.code == 200) {
-          this.list = response.data.list
-          this.formData.totalRow = response.data.totalRow;
-          this.listLoading = false
-          this.role.orderNumber = response.data.length + 1
-        }
-      })
-    },
-
-    /** 添加菜单 */
-    addShow(row) {
-      this.dialogVisible = true
-      this.dialogType = 'new'
-      if (row == undefined) {
-        this.role.parentMenuId = 0
-      } else {
-        this.role.parentMenuId = row.menuId
+      for (const key in this.formData.paras) { 
+        if (this.formData.paras[key] == '')  this.formData.paras[key] = null
       }
-      this.$nextTick(() => {
-        this.$refs['formRole'].clearValidate()
-      })
+      try {
+        this.formData.totalRow = -1
+        const { data } = await getList('/trade-admin/api/judge/pageList', this.formData)
+          this.list = data.list
+          this.formData.totalRow = data.totalRow;
+          this.listLoading = false
+          
+      } catch (error) {
+        // this.$message.error('查询列表失败,数据为空')
+        this.loading = false
+      }
     },
     /** 通过 */
     adoptFun(row) {
       console.log(row,'初筛通过');
-      this.$confirm('初筛确认，是否进入下一阶段？', '提示', {
+      this.$confirm('复审确认，是否进入下一阶段？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         postFun('/trade-admin/api/judge/operate',{
-          worksStatus:'1',
+          worksStatus:'8',
           worksIdList:Array(row.worksId)
         }).then(res=>{
           alertMsg('success', res.message)
@@ -231,38 +243,33 @@ export default {
     successFun(){
 
     },
-    goOpus(worksId) { // 跳转作品内页 
+    goOpus(worksId,worksStatus,str) { // 跳转作品内页 
       this.$router.push({ path: "zuoPinNeiYe" });
       this.$store.commit('export/setWorksId',worksId)
+      this.$store.commit('export/worksStatus',worksStatus)
+      this.$store.commit('export/str',str)
     },
-    /** 添加菜单 */
-    addFun() {
-      if (this.role.menuFlag != '1') {
-        this.role.hiddened = 'true'
-        this.role.menuIcon = ''
-      }
-      this.$refs['formRole'].validate((valid) => {
-        if (valid) {
-          this.loading = true
-          postFun('', this.role).then(response => {
-            if (response.code == 200) {
-              this.loading = false
-              alertMsg('success', response.message)
-              this.handleClose()
+    /** 确认 */
+    addShow() {
+      this.$confirm('复审确认，是否进入下一阶段？？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+          postFun('/trade-admin/api/judge/confirm',{
+            worksStatus:'8',
+            competitionId:this.competitionId
+          }).then(res=>{
+            alertMsg('success', res.message)
               /** 刷新表格 */
               this.getList()
-            }
-          }).catch(() => {
-            this.loading = false
           })
-        } else {
-          return false
-        }
-      })
-    },
-    /** 编辑菜单 */
-    modifyFun() {
-      
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消确定'
+        });          
+      });
     },
     /* 驳回*/
     deleteFun(row) {
@@ -287,32 +294,10 @@ export default {
         return false
       })
     },
-    /** 关闭弹框 */
-    handleClose() {
-      this.dialogVisible = false
-      /** 恢复初始化数据 */
-      this.role = this.$options.data().role
-    },
-    onTreeDataChange(list) {
-      list.forEach((c, index) => {
-        this.updateOrderByMenuId.push({
-          'menuId': c.menuId, // 菜单ID
-          'orderNumber': index, // 排序号
-          'parentMenuId': c.parentMenuId
-        })
-        this.menuListFun(c, index)
-      })
-      this.treeData.lists = list
-
-      /* 排序*/
-      postFun('/baas-admin/api/menu/updateOrderByMenuId', this.updateOrderByMenuId).then(response => {
-        if (response.code == 200) {
-          alertMsg('success', response.message)
-          /** 刷新表格 */
-          this.getList()
-          this.updateOrderByMenuId = []
-        }
-      })
+    /* 重置 */
+    reset() {
+      for (const key in this.formData.paras) { this.formData.paras[key] = ''}
+      this.getList()
     },
     // 多选框选中的内容id
     changeFun(val) {

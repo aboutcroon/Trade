@@ -34,7 +34,7 @@
 <!--                <div class="allNews_more">加载更多…</div>-->
 <!--            </div>-->
             <div class="allNews" v-show="newsType === 1">
-                <div class="allNews_whole" @click="readAllNews" v-for="item in newsList" :key="item.articleId">
+                <div class="allNews_whole" @click="readAllNews(item.articleId)" v-for="item in newsList" :key="item.articleId">
                     <div class="allNews_title">{{ item.articleTitle }}</div>
                     <div class="allNews_text">{{item.articleContent}}</div>
                     <img :src="item.coverUrl">
@@ -45,43 +45,11 @@
 
             <!--热点新闻-->
             <div class="allNews" v-show="newsType === 2">
-                <div class="allNews_whole" @click="readAllNews">
-                    <div class="allNews_title">
-                        环球网快讯]刚刚，共和党总统候选人特朗普连
-                        发五条推文，抱怨宾夕法尼亚州计票“不公”
-                    </div>
-                    <div class="allNews_text">
-                        特朗普先是写道：“‘这是我们所知道的。我们必须回到州一级来看看这个泥沼最初是如何形成的
-                        特朗普先是写道：“‘这是我们所知道的。我们必须回到州一级来看看这个泥沼最初是如何形成的
-                    </div>
-                    <img src="../../assets/img/news2.png">
-                    <div class="allNews_type">中华商标协会官方</div>
-                    <div class="allNews_read">阅读原文</div>
-                </div>
-                <div class="allNews_whole" @click="readAllNews">
-                    <div class="allNews_title">
-                        环球网快讯]刚刚，共和党总统候选人特朗普连
-                        发五条推文，抱怨宾夕法尼亚州计票“不公”
-                    </div>
-                    <div class="allNews_text">
-                        特朗普先是写道：“‘这是我们所知道的。我们必须回到州一级来看看这个泥沼最初是如何形成的
-                        特朗普先是写道：“‘这是我们所知道的。我们必须回到州一级来看看这个泥沼最初是如何形成的
-                    </div>
-                    <img src="../../assets/img/news2.png">
-                    <div class="allNews_type">中华商标协会官方</div>
-                    <div class="allNews_read">阅读原文</div>
-                </div>
-                <div class="allNews_whole" @click="readAllNews">
-                    <div class="allNews_title">
-                        环球网快讯]刚刚，共和党总统候选人特朗普连
-                        发五条推文，抱怨宾夕法尼亚州计票“不公”
-                    </div>
-                    <div class="allNews_text">
-                        特朗普先是写道：“‘这是我们所知道的。我们必须回到州一级来看看这个泥沼最初是如何形成的
-                        特朗普先是写道：“‘这是我们所知道的。我们必须回到州一级来看看这个泥沼最初是如何形成的
-                    </div>
-                    <img src="../../assets/img/news2.png">
-                    <div class="allNews_type">中华商标协会官方</div>
+                <div class="allNews_whole" @click="readAllNews(item.articleId)" v-for="item in newsList" :key="item.articleId">
+                    <div class="allNews_title">{{ item.articleTitle }}</div>
+                    <div class="allNews_text">{{item.articleContent}}</div>
+                    <img :src="item.coverUrl">
+                    <div class="allNews_type">{{item.articleTag}}</div>
                     <div class="allNews_read">阅读原文</div>
                 </div>
             </div>
@@ -127,12 +95,12 @@ export default {
                 this.setNewsType(2)
             }
         },
-        // 前往 新闻中心->全部新闻
-        readAllNews() {
+        // 前往 新闻中心->新闻内容
+        readAllNews(key) {
             this.$router.push({
                 name: 'centerAllNews',
                 query: {
-                    'allNewsId': 1
+                    'allNewsId': key
                 }
             })
             this.setActivePage(7)
@@ -147,24 +115,23 @@ export default {
             })
             this.setActivePage(9)
         },
-        // 时间转换
-        timeSwitch(time) {
-            let y = result.getFullYear()
-            let m = result.getMonth() + 1
-            let d = result.getDate()
-            let h = result.getHours()
-            let mm = result.getMinutes()
-            let s = result.getSeconds()
-            return y + '-' + this.timeAdd(m) + '-' + this.timeAdd(d) + ' ' + this.timeAdd(h) + ':' + this.timeAdd(mm) + ':' + this.timeAdd(s)
-        },
-        timeAdd(m) {
-            return m < 10 ? '0' + m : m
-        },
+        // // 时间转换
+        // timeSwitch(time) {
+        //     let y = result.getFullYear()
+        //     let m = result.getMonth() + 1
+        //     let d = result.getDate()
+        //     let h = result.getHours()
+        //     let mm = result.getMinutes()
+        //     let s = result.getSeconds()
+        //     return y + '-' + this.timeAdd(m) + '-' + this.timeAdd(d) + ' ' + this.timeAdd(h) + ':' + this.timeAdd(mm) + ':' + this.timeAdd(s)
+        // },
+        // timeAdd(m) {
+        //     return m < 10 ? '0' + m : m
+        // },
         // 获取新闻列表
         async initNews() {
             const {data: res} = await postFun('/trade-web/api/article/pageList', this.initData)
             this.newsList = res.list
-            console.log(this.newsList)
         },
     },
     computed: {

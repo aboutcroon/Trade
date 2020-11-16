@@ -7,7 +7,6 @@
         style="margin: 0; padding-top: 20px"
       >
         <el-col :xs="24" :sm="24" :lg="24">
-          <!-- <el-divider content-position="left">查询选项</el-divider> -->
           <el-form
             ref="form"
             class="option"
@@ -15,19 +14,9 @@
             label-width="75px"
             :inline="true"
           >
-            <!-- <el-row :gutter="23">
-              <el-col :xs="24" :sm="24" :lg="8"> -->
-            <el-form-item>
-              <span
-                class="icon iconfont iconfilter filter-button"
-                @click="showFilter = !showFilter"
-                ><span>筛选</span></span
-              >
-            </el-form-item>
-
             <el-form-item>
               <el-input
-                v-model="formData.menuName"
+                v-model="formData.paras.articleTitle"
                 prefix-icon="iconfont icon-sousuo iconsearchsvg"
                 clearable
                 placeholder="搜索文章标题"
@@ -36,26 +25,31 @@
             </el-form-item>
             <el-form-item>
               <el-input
-                v-model="formData.menuName"
+                v-model="formData.paras.articleTag"
                 prefix-icon="iconfont icon-sousuo iconsearchsvg"
                 clearable
                 placeholder="搜索文章标签"
                 @keyup.enter.native="getList()"
               />
             </el-form-item>
-
+            <!-- <el-form-item>
+              <el-input
+                v-model="formData.paras.articleColumn"
+                prefix-icon="iconfont icon-sousuo iconsearchsvg"
+                clearable
+                placeholder="搜索文章栏目"
+                @keyup.enter.native="getList()"
+              />
+            </el-form-item> -->
             <el-form-item class="queryBtn">
               <el-button class="cx" @click="getList()">查询</el-button>
               <el-button
                 class="filter-item"
-                icon="el-icon-plus"
-                @click="addShow()"
+                @click="reset()"
                 >重置</el-button
               >
             </el-form-item>
-              <addEditor class="add-fixed"></addEditor>
-              <!-- <el-button class="add-fixed" style="font-size:25px;border-radius:50% !important; height:40px;width:40px; line-height:40px;">+</el-button> -->
-            <!-- </el-row> -->
+              <addEditor class="add-fixed" ref="addEditor"></addEditor>
           </el-form>
           <el-table
             v-loading="listLoading"
@@ -71,11 +65,6 @@
                 <span v-html="scope.row.articleTitle" />
               </template>
             </el-table-column>
-            <!-- <el-table-column label="所属栏目" :show-overflow-tooltip="true" width="140">
-              <template slot-scope="scope">
-                <span v-html="scope.row.menuFlag == '2' ? '按钮' : '菜单'"></span>
-              </template>
-            </el-table-column> -->
             <el-table-column label="所属栏目" :show-overflow-tooltip="true">
               <template slot-scope="scope">{{ scope.row.articleContent }}</template>
             </el-table-column>
@@ -108,21 +97,29 @@
             >
               <template slot-scope="scope">
                 <el-link
+                v-if="scope.row.status == '1'"
                   size="mini"
                   type="primary"
                   plain
                   :underline="false"
                   @click="editFun(scope.row)"
                 >
-                  <span class="icon iconfont iconedit" style="color:#888888" />&nbsp;&nbsp;
-                </el-link>
+                  <span class="icon iconfont iconedit" />编辑</el-link>
                 <el-link
+                v-if="scope.row.status == '1'"
+
                   size="mini"
                   type="danger"
                   plain
-                  @click="deleteFun(scope.row.menuId)"
-                  ><span class="icon iconfont icondelete"
-                /></el-link>
+                  @click="deleteFun(scope.row.articleId)"
+                  ><span class="icon iconfont icondelete"/>删除 </el-link>
+                   <el-link
+                  v-if="scope.row.status != '1'"
+                  size="mini"
+                  type="danger"
+                  plain
+                  @click="editFun(scope.row)"
+                  ><span class="icon iconfont icondelete"/>查看 </el-link>
               </template>
             </el-table-column>
           </el-table>
@@ -156,5 +153,6 @@ export default {
   bottom: 5%;
   right: 3%;
   z-index: 1002;
+  
 }
 </style>

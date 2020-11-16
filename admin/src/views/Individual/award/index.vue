@@ -24,9 +24,8 @@
                 ><span>筛选</span></span
               >
             </el-form-item>
-
-            <el-form-item label="赛事名称">
-              <el-select v-model="formData.paras.competitionName" value-key="" placeholder="请筛选" clearable @change="getList()" >
+            <el-form-item>
+              <el-select v-model="formData.paras.competitionName" value-key="" placeholder="请筛选"  clearable @change="sl($event)" >
                 <el-option v-for="item in gamesList"
                   :key="item.competitionId"
                   :label="item.competitionName"
@@ -52,9 +51,10 @@
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
                 align="right"
+                width="400"
               />
             </el-form-item>
-
+<!-- 
             <el-form-item label="赛事类型">
               <el-select
                 v-model="formData.status"
@@ -124,14 +124,14 @@
                   :value="item.key"
                 />
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
             <!-- </el-col> -->
             <el-form-item class="queryBtn">
               <el-button class="cx" @click="getList()">查询</el-button>
               <el-button
                 class="filter-item"
                 icon="el-icon-plus"
-                @click="addShow()"
+                @click="reset()"
                 >重置</el-button
               >
               <el-button
@@ -198,9 +198,6 @@
             <el-table-column label="评委用户名" :show-overflow-tooltip="true">
               <template slot-scope="scope">{{ scope.row.judgeUserName }}</template>
             </el-table-column>
-            <el-table-column label="作品状态" :show-overflow-tooltip="true">
-              <template slot-scope="scope">{{ scope.row.worksStatus | severity }}</template>
-            </el-table-column>
             <el-table-column label="上传时间" :show-overflow-tooltip="true">
               <template slot-scope="scope">
                 <span>{{ scope.row.createTime | timeFilter13 }}</span>
@@ -209,10 +206,15 @@
             <el-table-column label="作品评分" :show-overflow-tooltip="true">
               <template slot-scope="scope">{{ scope.row.worksScore }}</template>
             </el-table-column>
-            <el-table-column label="作品缩略图" :show-overflow-tooltip="true">
+            <el-table-column label="作品状态" :show-overflow-tooltip="true">
+              <template slot-scope="scope">{{ scope.row.worksStatus | severity }}</template>
+            </el-table-column>
+            <el-table-column label="奖项类型" :show-overflow-tooltip="true">
+              <template slot-scope="scope">{{ scope.row.awards }}</template>
+            </el-table-column>
+            <el-table-column label="作品缩略图">
               <template slot-scope="scope">
-                <img :src="scope.row.worksJpgUrl" alt="">
-                
+                <img :src="scope.row.worksJpgUrl|imgs" alt="" width="80" height="40">
               </template>
             </el-table-column>
            <el-table-column
@@ -224,12 +226,28 @@
             >
               <template slot-scope="scope">
                 <el-link class="icon iconfont icontask" size="mini" type="primary" plain @click="editFun(scope.row)">查看&nbsp;&nbsp;</el-link>
-                <el-link class="icon iconfont iconxinhao1" size="mini" style="color:#005AB3" plain @click="deleteFun(scope.row.menuId)">评奖</el-link>
-                <!-- <el-link class="icon iconfont iconactivated" size="mini" type="success" plain @click="deleteFun(scope.row.menuId)">通过</el-link>
-                <el-link class="icon iconfont iconchehuisekuai" size="mini" type="danger" plain @click="deleteFun(scope.row.menuId)">驳回</el-link> -->
+                <el-link class="icon iconfont iconxinhao1" size="mini" style="color:#005AB3" plain @click="awardFun(scope.row)">评奖</el-link>
               </template>
             </el-table-column>
           </el-table>
+          <el-dialog title="评奖确认" :visible.sync="dialogFormVisible" width="25%">
+            <el-form :model="form">
+              <el-form-item label="评奖等级" style="">
+                <el-select v-model="form.awards" placeholder="请选择奖励级别" @change="selectFun($event)">
+                  <el-option v-for="item in grList"
+                  :key="item.key"
+                  :label="item.value"
+                  :value="item.value">
+                </el-option>
+                </el-select>
+              </el-form-item>
+            </el-form>
+            <div style="color:red;">点击确认，即确认大赛奖项，请慎重</div>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="open(form.region)">确 定</el-button>
+            </div>
+          </el-dialog>
           <pagination
             v-show="formData.totalRow > 0"
             :total="formData.totalRow"
@@ -239,111 +257,8 @@
           />
         </el-col>
       </el-row>
-      <!-- 权限弹框及详情 -->
 
-      <el-drawer
-        :visible.sync="dialogVisible"
-        direction="rtl"
-        :with-header="false"
-        size="30%"
-        custom-class="demo-drawer"
-        :before-close="handleClose"
-      >
-        <p class="drawer-title">
-          <span class="icon iconfont iconedit">
-            <span v-if="role.menuFlag == '1'">
-              <span v-if="dialogType === 'edit'" class="drawerHtml"
-                >编辑菜单</span
-              >
-              <span v-else class="drawerHtml">新增菜单</span>
-            </span>
-            <span v-else>
-              <span v-if="dialogType === 'edit'" class="drawerHtml"
-                >编辑按钮</span
-              >
-              <span v-else class="drawerHtml">新增按钮</span>
-            </span>
-          </span>
-          <i class="el-icon-close fr" @click="handleClose" />
-        </p>
-        <div class="demo-drawer__content">
-          <el-form
-            ref="formRole"
-            class="formBox"
-            :model="role"
-            label-width="80px"
-            label-position="top"
-            :rules="rules"
-          >
-            <el-form-item label="类型" prop="menuFlag">
-              <el-radio v-model="role.menuFlag" label="1">菜单</el-radio>
-              <el-radio v-model="role.menuFlag" label="2">按钮</el-radio>
-            </el-form-item>
-            <el-form-item
-              :label="role.menuFlag == '1' ? '菜单名称' : '按钮名称'"
-              prop="menuName"
-            >
-              <el-input
-                v-model="role.menuName"
-                :placeholder="
-                  role.menuFlag == '1' ? '请输入菜单名称' : '请输入按钮名称'
-                "
-              />
-            </el-form-item>
-            <el-form-item
-              :label="role.menuFlag == '1' ? '菜单URL' : '控制器方法'"
-              prop="menuUrl"
-            >
-              <el-input v-model="role.menuUrl" placeholder="请输入菜单URL" />
-            </el-form-item>
-            <el-form-item
-              :label="role.menuFlag == '1' ? '菜单状态' : '按钮状态'"
-              prop="status"
-            >
-              <el-select v-model="role.status" placeholder="请选择菜单状态">
-                <el-option
-                  v-for="item in stateList"
-                  :key="item.key"
-                  :label="item.value"
-                  :value="item.key"
-                />
-              </el-select>
-            </el-form-item>
-            <el-form-item
-              v-if="role.menuFlag == '1' ? true : false"
-              label="图标"
-            >
-              <el-input v-model="role.menuIcon" placeholder="请输入图标类名" />
-            </el-form-item>
-            <el-form-item
-              v-if="role.menuFlag == '1' ? true : false"
-              label="是否在侧边栏显示"
-            >
-              <el-select
-                v-model="role.hiddened"
-                placeholder="请选择是否在侧边栏显示"
-              >
-                <el-option
-                  v-for="item in hiddenList"
-                  :key="item.key"
-                  :label="item.value"
-                  :value="item.key"
-                />
-              </el-select>
-            </el-form-item>
-          </el-form>
-          <div class="demo-drawer__footer">
-            <el-button
-              :loading="loading"
-              class="cx"
-              @click="dialogType == 'edit' ? modifyFun() : addFun()"
-              >保存</el-button
-            >
-            <el-button @click="handleClose()">关闭</el-button>
-          </div>
-        </div>
-      </el-drawer>
-     
+    
     </div>
   </div>
 </template>

@@ -26,10 +26,10 @@
             <div class="sloganTwo">世界互联网中国梦</div>
             <div class="photoOne">
                 <img src="../../assets/img/homePhoto1.png">
-                <div class="btn">
-                    <span>立即报名</span>
-                    <i class="iconfont iconjiantou"></i>
-                </div>
+                <!--                <div class="btn">-->
+                <!--                    <span>立即报名</span>-->
+                <!--                    <i class="iconfont iconjiantou"></i>-->
+                <!--                </div>-->
                 <div class="stateText">
                     <span style="margin-top: 0;">乘李克强总理达沃斯论坛讲话批示之风，开创大众事业</span>
                     <span>冲开产业、行业之波浪，在创新、创意的激流中前进</span>
@@ -95,31 +95,57 @@
                 <div class="sloganEig">COMPETITION SCHEDULE</div>
             </div>
 
-            <div class="process">
-                <div class="process_title">作品征集</div>
-                <div class="process_title" style="left: 39.750894vw">作品初审</div>
-                <div class="process_title" style="left: 71.286604vw">作品终审</div>
-                <div class="process_bar">
-                    <div class="bar"></div>
-                    <div class="circle"></div>
-                    <div class="bar" style="left: 18.550417vw"></div>
-                    <div class="bar" style="left: 31.800716vw"></div>
-                    <div class="circle" style="left: 46.376043vw"></div>
-                    <div class="bar" style="left: 50.351133vw; background: #BBBBBB;"></div>
-                    <div class="bar" style="left: 63.601431vw; background: #BBBBBB;"></div>
-                    <div class="circle"
-                         style="left: 76.851729vw; width: 4.240095vw; height: 4.240095vw; background: #ffffff; border: 0.265006vw solid #BBBBBB;"></div>
-                    <div class="bar" style="left: 81.091825vw; width: 10.865244vw; background: #BBBBBB;"></div>
+            <div class="container">
+                <div class="process">
+                    <div class="process_title" style="margin-left: 7.950179vw;">作品征集</div>
+                    <div class="process_title">作品初审</div>
+                    <div class="process_title">初审公布</div>
+                    <div class="process_title">作品终审</div>
+                    <div class="process_title">获奖结果</div>
+                    <div class="process_title">颁奖典礼</div>
+                    <div class="process_bar">
+                        <div class="bar"></div>
+                        <div class="circle"></div>
+                        <div class="bar" style="left: 18.550417vw; background: #BBBBBB;"></div>
+                        <div class="bar" style="left: 31.800716vw; background: #BBBBBB;"></div>
+                        <div class="circle" style="left: 45.31602vw; width: 4.240095vw; height: 4.240095vw; background: #ffffff; border: 0.265006vw solid #BBBBBB;"></div>
+                        <div class="bar" style="left: 50.351133vw; background: #BBBBBB;"></div>
+                        <div class="bar" style="left: 63.601431vw; background: #BBBBBB;"></div>
+                        <div class="circle"
+                             style="left: 76.851729vw; width: 4.240095vw; height: 4.240095vw; background: #ffffff; border: 0.265006vw solid #BBBBBB;"></div>
+                        <div class="bar" style="left: 81.091825vw; background: #BBBBBB;"></div>
+
+                        <div class="bar" style="left: 93.812111vw; background: #BBBBBB;"></div>
+                        <div class="circle"
+                             style="left: 107.327415vw; width: 4.240095vw; height: 4.240095vw; background: #ffffff; border: 0.265006vw solid #BBBBBB;"></div>
+                        <div class="bar" style="left: 111.56751vw; background: #BBBBBB;"></div>
+
+                        <div class="bar" style="left: 124.817808vw; background: #BBBBBB;"></div>
+                        <div class="circle"
+                             style="left: 138.333112vw; width: 4.240095vw; height: 4.240095vw; background: #ffffff; border: 0.265006vw solid #BBBBBB;"></div>
+                        <div class="bar" style="left: 142.573208vw; background: #BBBBBB;"></div>
+
+                        <div class="bar" style="left: 155.823506vw; background: #BBBBBB;"></div>
+                        <div class="circle"
+                             style="left: 169.33881vw; width: 4.240095vw; height: 4.240095vw; background: #ffffff; border: 0.265006vw solid #BBBBBB;"></div>
+                        <div class="bar" style="left: 173.843911vw; background: #BBBBBB;"></div>
+
+                    </div>
+                    <div class="process_time">2020.12.06</div>
+                    <div class="process_time" style="top: 19.875447vw; left: 13.78031vw">至</div>
+                    <div class="process_time" style="top: 25.175566vw">2021.01.24</div>
+                    <div class="process_time" style="left: 37.365841vw">2021.01.25</div>
+                    <div class="process_time" style="top: 19.875447vw; left: 45.846032vw">至</div>
+                    <div class="process_time" style="left: 37.365841vw; top: 25.175566vw">2021.01.28</div>
+                    <div class="process_time" style="left: 68.90155vw">2021.01.28</div>
+                    <div class="process_time" style="top: 19.875447vw; left: 77.381741vw">至</div>
+                    <div class="process_time" style="left: 68.90155vw; top: 25.175566vw">2021.01.31</div>
+                    <div class="process_time" style="left: 100.702266vw">2021.02.01</div>
+                    <div class="process_time" style="top: 19.875447vw; left: 109.182457vw">至</div>
+                    <div class="process_time" style="left: 100.702266vw; top: 25.175566vw">2021.02.03</div>
+                    <div class="process_time" style="left: 131.442957vw">2021.02.03</div>
+                    <div class="process_time" style="left: 163.243673vw">2021.02.05</div>
                 </div>
-                <div class="process_time">2020.12.06</div>
-                <div class="process_time" style="top: 19.875447vw; left: 13.78031vw">至</div>
-                <div class="process_time" style="top: 25.175566vw">2021.01.24</div>
-                <div class="process_time" style="left: 37.365841vw">2021.01.25</div>
-                <div class="process_time" style="top: 19.875447vw; left: 45.846032vw">至</div>
-                <div class="process_time" style="left: 37.365841vw; top: 25.175566vw">2021.01.28</div>
-                <div class="process_time" style="left: 68.90155vw">2021.02.01</div>
-                <div class="process_time" style="top: 19.875447vw; left: 77.381741vw">至</div>
-                <div class="process_time" style="left: 68.90155vw; top: 25.175566vw">2021.02.03</div>
             </div>
 
             <div class="sloganNin">奖项设置</div>
@@ -311,74 +337,74 @@
             </div>
             <div class="load" @click="loadGuests" v-show="load">加载更多…</div>
 
-<!--            <div class="sloganThi">人气作品排行榜</div>-->
-<!--            <div class="sloganFour">LIST OF POPULAR WORKS</div>-->
-<!--            <el-tabs v-model="activeName" @tab-click="tabClick" class="filter_tab">-->
-<!--                <el-tab-pane label="人气总榜" name="first"></el-tab-pane>-->
-<!--                <el-tab-pane label="月度总榜" name="second"></el-tab-pane>-->
-<!--                <el-tab-pane label="今日总榜" name="third"></el-tab-pane>-->
-<!--            </el-tabs>-->
-<!--            <div class="show">-->
-<!--                <div v-show="showSample === 1">-->
-<!--                    <div class="show_item">-->
-<!--                        <div class="show_tag3"><span>正在评比中…</span></div>-->
-<!--                        <div class="show_like1"></div>-->
-<!--                        <div class="show_image">-->
-<!--                            <img src="../../assets/img/sample1.png">-->
-<!--                        </div>-->
-<!--                        <div class="show_name">作品名</div>-->
-<!--                        <div class="show_author"><span>设计师：</span></div>-->
-<!--                        <div class="show_people">-->
-<!--                            <i class="iconfont iconeye"></i>-->
-<!--                            2324人-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="show_item">-->
-<!--                        <div class="show_tag3"><span>正在评比中…</span></div>-->
-<!--                        <div class="show_like1"></div>-->
-<!--                        <div class="show_image">-->
-<!--                            <img src="../../assets/img/sample2.png">-->
-<!--                        </div>-->
-<!--                        <div class="show_name">作品名</div>-->
-<!--                        <div class="show_author"><span>设计师：</span></div>-->
-<!--                        <div class="show_people">-->
-<!--                            <i class="iconfont iconeye"></i>-->
-<!--                            2324人-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div v-show="showSample === 2">-->
-<!--                    <div class="show_item">-->
-<!--                        <div class="show_tag3"><span>正在评比中…</span></div>-->
-<!--                        <div class="show_like1"></div>-->
-<!--                        <div class="show_image">-->
-<!--                            <img src="../../assets/img/sample2.png">-->
-<!--                        </div>-->
-<!--                        <div class="show_name">作品名</div>-->
-<!--                        <div class="show_author"><span>设计师：</span></div>-->
-<!--                        <div class="show_people">-->
-<!--                            <i class="iconfont iconeye"></i>-->
-<!--                            2324人-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div v-show="showSample === 3">-->
-<!--                    <div class="show_item">-->
-<!--                        <div class="show_tag3"><span>正在评比中…</span></div>-->
-<!--                        <div class="show_like1"></div>-->
-<!--                        <div class="show_image">-->
-<!--                            <img src="../../assets/img/sample1.png">-->
-<!--                        </div>-->
-<!--                        <div class="show_name">作品名</div>-->
-<!--                        <div class="show_author"><span>设计师：</span></div>-->
-<!--                        <div class="show_people">-->
-<!--                            <i class="iconfont iconeye"></i>-->
-<!--                            2324人-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="load" style="margin-top: 0;margin-bottom: 5.300119vw;">加载更多…</div>-->
-<!--            </div>-->
+            <!--            <div class="sloganThi">人气作品排行榜</div>-->
+            <!--            <div class="sloganFour">LIST OF POPULAR WORKS</div>-->
+            <!--            <el-tabs v-model="activeName" @tab-click="tabClick" class="filter_tab">-->
+            <!--                <el-tab-pane label="人气总榜" name="first"></el-tab-pane>-->
+            <!--                <el-tab-pane label="月度总榜" name="second"></el-tab-pane>-->
+            <!--                <el-tab-pane label="今日总榜" name="third"></el-tab-pane>-->
+            <!--            </el-tabs>-->
+            <!--            <div class="show">-->
+            <!--                <div v-show="showSample === 1">-->
+            <!--                    <div class="show_item">-->
+            <!--                        <div class="show_tag3"><span>正在评比中…</span></div>-->
+            <!--                        <div class="show_like1"></div>-->
+            <!--                        <div class="show_image">-->
+            <!--                            <img src="../../assets/img/sample1.png">-->
+            <!--                        </div>-->
+            <!--                        <div class="show_name">作品名</div>-->
+            <!--                        <div class="show_author"><span>设计师：</span></div>-->
+            <!--                        <div class="show_people">-->
+            <!--                            <i class="iconfont iconeye"></i>-->
+            <!--                            2324人-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                    <div class="show_item">-->
+            <!--                        <div class="show_tag3"><span>正在评比中…</span></div>-->
+            <!--                        <div class="show_like1"></div>-->
+            <!--                        <div class="show_image">-->
+            <!--                            <img src="../../assets/img/sample2.png">-->
+            <!--                        </div>-->
+            <!--                        <div class="show_name">作品名</div>-->
+            <!--                        <div class="show_author"><span>设计师：</span></div>-->
+            <!--                        <div class="show_people">-->
+            <!--                            <i class="iconfont iconeye"></i>-->
+            <!--                            2324人-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div v-show="showSample === 2">-->
+            <!--                    <div class="show_item">-->
+            <!--                        <div class="show_tag3"><span>正在评比中…</span></div>-->
+            <!--                        <div class="show_like1"></div>-->
+            <!--                        <div class="show_image">-->
+            <!--                            <img src="../../assets/img/sample2.png">-->
+            <!--                        </div>-->
+            <!--                        <div class="show_name">作品名</div>-->
+            <!--                        <div class="show_author"><span>设计师：</span></div>-->
+            <!--                        <div class="show_people">-->
+            <!--                            <i class="iconfont iconeye"></i>-->
+            <!--                            2324人-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div v-show="showSample === 3">-->
+            <!--                    <div class="show_item">-->
+            <!--                        <div class="show_tag3"><span>正在评比中…</span></div>-->
+            <!--                        <div class="show_like1"></div>-->
+            <!--                        <div class="show_image">-->
+            <!--                            <img src="../../assets/img/sample1.png">-->
+            <!--                        </div>-->
+            <!--                        <div class="show_name">作品名</div>-->
+            <!--                        <div class="show_author"><span>设计师：</span></div>-->
+            <!--                        <div class="show_people">-->
+            <!--                            <i class="iconfont iconeye"></i>-->
+            <!--                            2324人-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="load" style="margin-top: 0;margin-bottom: 5.300119vw;">加载更多…</div>-->
+            <!--            </div>-->
             <div class="line"></div>
             <foot-bottom></foot-bottom>
         </div>
@@ -483,7 +509,7 @@ export default {
                 this.setGuestsType(5)
             }
             this.$router.push({
-                name: 'homeGuests',
+                name: 'competitionGuests',
                 query: {
                     guestsId: this.guestsType
                 }
@@ -724,49 +750,55 @@ export default {
             }
         }
 
-        .process {
+        .container {
             @include wh(91.957069vw, 30.475686vw);
-            margin-top: 3.710083vw;
-            position: relative;
 
-            .process_title {
-                @include font(3.710083vw, 5.565125vw, 500);
-                color: #454545;
-                letter-spacing: 0.212005vw;
-                height: 3.710083vw;
-                position: absolute;
-                left: 7.950179vw;
-                top: 1.590036vw;
-            }
+            .process {
+                @include wh(100%, 30.475686vw);
+                margin-top: 3.710083vw;
+                position: relative;
+                overflow-x: scroll;     // 滑动
+                white-space: nowrap;    // 使其不换行，才能滑动
 
-            .process_bar {
-                @include wh(100%, 4.240095vw);
-                position: absolute;
-                top: 7.950179vw;
-
-                .bar {
-                    @include wh(13.250298vw, 0.265006vw);
-                    @include ct;
-                    background: #B30000;
+                .process_title {
+                    @include font(3.710083vw, 5.565125vw, 500);
+                    color: #454545;
+                    letter-spacing: 0.212005vw;
+                    height: 3.710083vw;
+                    display: inline-block;
+                    margin-left: 15.900358vw;
+                    margin-top: 1.590036vw;
                 }
 
-                .circle {
-                    @include wh(2.65006vw, 2.65006vw);
-                    @include ct;
-                    left: 14.575328vw;
-                    background: #B30000;
-                    border-radius: 50%;
-                }
-            }
+                .process_bar {
+                    @include wh(100%, 4.240095vw);
+                    position: absolute;
+                    top: 7.950179vw;
 
-            .process_time {
-                @include font(3.710083vw, 5.565125vw);
-                color: #636363;
-                letter-spacing: 0.212005vw;
-                height: 3.710083vw;
-                position: absolute;
-                top: 13.250298vw;
-                left: 5.300119vw;
+                    .bar {
+                        @include wh(13.250298vw, 0.265006vw);
+                        @include ct;
+                        background: #B30000;
+                    }
+
+                    .circle {
+                        @include wh(2.65006vw, 2.65006vw);
+                        @include ct;
+                        left: 14.575328vw;
+                        background: #B30000;
+                        border-radius: 50%;
+                    }
+                }
+
+                .process_time {
+                    @include font(3.710083vw, 5.565125vw);
+                    color: #636363;
+                    letter-spacing: 0.212005vw;
+                    height: 3.710083vw;
+                    position: absolute;
+                    top: 13.250298vw;
+                    left: 5.300119vw;
+                }
             }
         }
 

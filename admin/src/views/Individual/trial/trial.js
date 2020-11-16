@@ -64,6 +64,7 @@ export default {
         pageNumber: 1,
         totalRow: -1
       },
+      competitionId:'',//当前大赛id
       // /* 奖项类型*/
       // stateList: [],
       // /* 赛事名称 */
@@ -169,79 +170,90 @@ export default {
     }
   },
   methods: {
-   
-    /* 初始化数据 */
+   /* 初始化数据 */
     async initData () {
       /** 传-1 后台计算总条数 */
       this.formData.totalRow = -1
       /** 分页默认从第一页开始 */
       this.formData.pageNumber = 1
       this.dictDataFun()
-      this.getList()
-      // this.selectFun()
-      const { data } = await getFun('/trade-admin/api/competition/list')
-      this.gamesList = data
+      this.gamesNameList()
     },
-    
+    /** 大赛名称接口 */
+    async gamesNameList(){
+      const { data } = await getFun('/trade-admin/api/competition/list')
+      console.log(data,'大赛名称');
+      this.gamesList = data
+      this.formData.paras.competitionName = data[0].competitionName // 默认选择第一个大赛,产品要求!
+      // this.competitionId = data[0].competitionId // 默认选择第一个大赛,产品要求!
+      this.sl()
+    },
+    sl(e){
+      console.log(e,'val');
+      let obj = {};
+      obj = this.gamesList.find((item)=>{//model就是上面的数据源
+      return item.competitionName ===  this.formData.paras.competitionName;//筛选出匹配数据
+    });
+    console.log(obj,'obj');
+    if (obj == undefined ) {
+      this.competitionId == ''
+    }else {
+      this.competitionId = obj.competitionId
+      console.log(this.competitionId,'this.competitionId');
+    }
+    this.getList()
+    },
     /** 表格 */
-    getList() {
+    async getList() {
       setTimeout(() => {
         this.listLoading = false
       }, 3000)
-      this.formData.paras = this.util.nullValueFun(this.formData.paras)
-      getList('/trade-admin/api/judge/pageList', this.formData).then(response => {
-        if (response.code == 200) {
-          this.list = response.data.list
-          this.formData.totalRow = response.data.totalRow;
-          this.listLoading = false
-          this.role.orderNumber = response.data.length + 1
-        }
-      })
-    },
-   
-    /** 添加菜单 */
-    addShow(row) {
-      this.dialogVisible = true
-      this.dialogType = 'new'
-      if (row == undefined) {
-        this.role.parentMenuId = 0
-      } else {
-        this.role.parentMenuId = row.menuId
+      for (const key in this.formData.paras) { 
+        if (this.formData.paras[key] == '')  this.formData.paras[key] = null
       }
-      this.$nextTick(() => {
-        this.$refs['formRole'].clearValidate()
-      })
+      try {
+        this.formData.totalRow = -1
+        const { data } = await getList('/trade-admin/api/judge/pageList', this.formData)
+          this.list = data.list
+          this.formData.totalRow = data.totalRow;
+          this.listLoading = false
+          
+      } catch (error) {
+        // this.$message.error('查询列表失败,数据为空')
+        this.loading = false
+      }
     },
-    // handleCurrentChange(row) {
-    // 	this.parentMenuId = row.menuId
-    // },
     /** 通过 */
     adoptFun(row) {
       console.log(Array(row.worksId),'????');
       console.log(row,'初审通过');
-      this.$confirm('初审确认，是否进入下一阶段？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        postFun('/trade-admin/api/judge/operate',{
-          worksStatus:'4',
-          worksIdList:Array(row.worksId)
-        }).then(res=>{
-          alertMsg('success', res.message)
-            /** 刷新表格 */
-            this.getList()
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消确定'
-        });          
-      });
+      if(row.worksStatus == 4){
+        alertMsg('waring','此作品已通过')
+      }else{
+        this.$confirm('初审是否通过？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          postFun('/trade-admin/api/judge/operate',{
+            worksStatus:'4',
+            worksIdList:Array(row.worksId)
+          }).then(res=>{
+            alertMsg('success', res.message)
+              /** 刷新表格 */
+              this.getList()
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消确定'
+          });          
+        });
+      }
     },
     /* 批量通过 */
     successFun(){
-      this.$confirm('初筛是否批量通过？', '提示', {
+      this.$confirm('初审是否批量通过？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -263,24 +275,19 @@ export default {
     },
     /** 确认 */
     addShow() {
-      console.log(this.checkBoxData);
-      this.$confirm('初筛是否批量确认？', '提示', {
+      this.$confirm('初审确认，是否进入下一阶段？？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        if(this.a == true){
-          alertMsg('danger', '有作品未通过')
-        }else{
-          postFun('/trade-admin/api/judge/operate',{
+          postFun('/trade-admin/api/judge/confirm',{
             worksStatus:'6',
-            worksIdList:this.checkBoxData
+            competitionId:this.competitionId
           }).then(res=>{
             alertMsg('success', res.message)
               /** 刷新表格 */
               this.getList()
           })
-        }
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -315,12 +322,10 @@ export default {
         return false
       })
     },
-    /** 关闭弹框 */
-    handleClose() {
-      this.dialogVisible = false
-      // this.dialogInput = false
-      /** 恢复初始化数据 */
-      this.role = this.$options.data().role
+    /* 重置 */
+    reset() {
+      for (const key in this.formData.paras) { this.formData.paras[key] = ''}
+      this.getList()
     },
     onTreeDataChange(list) {
      
@@ -481,6 +486,10 @@ export default {
       this.formData.totalRow = -1
       this.formData.pageNumber = 1
       this.getList()
+    },
+    goOpus(worksId) { // 跳转作品内页 
+      this.$router.push({ path: "zuoPinNeiYe" });
+      this.$store.commit('export/setWorksId',worksId)
     }
 
   }

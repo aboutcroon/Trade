@@ -7,36 +7,34 @@
         <div class="content">
             <div class="show">
                 <div class="show_item">
-                    <div class="show_tag1"><span>人气奖</span></div>
-                    <div class="show_like1"></div>
+                    <div class="show_tag1"><span>{{sample.prizeRateName}}</span></div>
+                    <div class="show_like1">{{sample.agreeCount}}</div>
                     <div class="show_image">
-                        <img src="../../assets/img/sample1.png">
+                        <img :src="sample.worksJpgUrl">
                     </div>
-                    <div class="show_name">111</div>
-                    <div class="show_author"><span>设计师：111</span></div>
+                    <div class="show_name">{{sample.worksName}}</div>
+                    <div class="show_author"><span>设计师：{{sample.worksDesigner}}</span></div>
                     <div class="show_people">
                         <i class="iconfont iconeye"></i>
-                        2324人
+                        {{sample.starValue}}人
                     </div>
                 </div>
             </div>
             <div class="other">
                 <div class="detail_title" style="margin-top: 3.975089vw;">大赛类型：</div>
-                <div class="detail_text">酒类</div>
+                <div class="detail_text">{{sample.competitionName}}</div>
                 <div class="detail_title">作品类型：</div>
-                <div class="detail_text">原创商标设计</div>
+                <div class="detail_text">{{sample.prizeRateId}}</div>
                 <div class="detail_title">赛事选择：</div>
-                <div class="detail_text">崇礼奖</div>
+                <div class="detail_text">{{sample.competitionId}}</div>
                 <div class="detail_title">奖项类型：</div>
-                <div class="detail_text">优创设计奖</div>
+                <div class="detail_text">{{sample.prizeName}}</div>
                 <div class="detail_title">说明：</div>
-                <div class="detail_text">
-                    改革开放40周年献礼。 2017年，中国的商标申请量达到570多万件。商标代表着企业独一无二的身份，注册商标不仅能得到法律保护，更是企业重要的无形资产
-                </div>
+                <div class="detail_text">{{sample.worksDescription}}</div>
                 <div class="detail_title">区块链证书：</div>
                 <div class="detail_text">此证书已经过多方确认备案，具有真实性</div>
                 <div class="detail_img">
-                    <img src="../../assets/img/sample2.png">
+                    <img :src="sample.worksVectorUrl">
                 </div>
             </div>
         </div>
@@ -46,14 +44,31 @@
 <script>
 import RightPanel from '../components/RightPanel/index'
 import {mapGetters, mapMutations} from 'vuex'
+import {postFun} from "@/api/transit";
 
 export default {
     name: "sample_detail",
+    data() {
+        return {
+            // 初始化接口数据
+            initData: {
+                pageNumber: 1,
+                pageSize: 4,
+                paras: {
+                    competitionId: 100,
+                    categoryNameList: ['公益', '酒类'],
+                    prizeRateNameList: ['第三届中华商标大赛', '第四届中华商标大赛', '初筛通过', '初审通过', '终审通过', '创意奖', '设计奖', '个人奖', '人气奖', '团体奖', '金奖', '银奖', '铜奖']
+                }
+            },
+            sample: {}     // 当前作品
+        }
+    },
     components: {
         RightPanel
     },
     mounted() {
         this.setActivePage(12)   // 修改当前激活的页面
+        this.initSamples()
     },
     computed: {
         ...mapGetters([
@@ -64,6 +79,16 @@ export default {
         ...mapMutations({
             setActivePage: 'set_ActivePage'
         }),
+        // 获取作品列表
+        async initSamples() {
+            const {data: res} = await postFun('/trade-web/api/works/pageList', this.initData)
+            console.log(res.list)
+            res.list.forEach((item, index) => {
+                if (item.worksId === this.$route.query.sampleId) {
+                    this.sample = item
+                }
+            })
+        }
     }
 }
 </script>
@@ -235,6 +260,7 @@ export default {
             .detail_img {
                 @include wh(100%, 60.156354vw);
                 margin-bottom: 8.745197vw;
+
                 img {
                     @include wh(100%, 100%);
                 }

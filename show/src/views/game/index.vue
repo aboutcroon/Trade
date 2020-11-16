@@ -90,7 +90,7 @@
         </sub-title>
         <GameRanking :list="rankingList" />
         <div class="see-more">
-          <router-link to="/">查看更多</router-link>
+          <router-link :to="{name: 'exhibition'}">查看更多</router-link>
         </div>
       </div>
     </section>
@@ -126,19 +126,19 @@ export default {
       rankingTitle: ['人气总榜', '月度总榜', '今日总榜'],
       rankingList: [
         {
-          link: '',
+          link: 'exhibitionWorkDetail',
           img: require("@/assets/img/game_ranking_1.jpg")
         },
         {
-          link: '',
+          link: 'exhibitionWorkDetail',
           img: require("@/assets/img/game_ranking_2.jpg")
         },
         {
-          link: '',
+          link: 'exhibitionWorkDetail',
           img: require("@/assets/img/game_ranking_3.jpg")
         },
         {
-          link: '',
+          link: 'exhibitionWorkDetail',
           img: require("@/assets/img/game_ranking_4.jpg")
         }
       ]

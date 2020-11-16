@@ -2,7 +2,7 @@
  * @Author: Sroxck 
  * @Date: 2020-11-14 10:47:56 
  * @Last Modified by: Sroxck
- * @Last Modified time: 2020-11-14 16:48:29
+ * @Last Modified time: 2020-11-16 17:48:46
  */
 import { getList, postFun, getFun } from '@/api/common' /* 表格列表、post请求、get请求 */
 import Pagination from '@/components/Pagination' /* 分页 */
@@ -51,14 +51,14 @@ export default {
         this.formData.totalRow = data.totalRow
         this.loading = false
       } catch (error) {
-        this.$message.error('查询列表失败,数据为空')
+        // this.$message.error('查询列表失败,数据为空')
         this.loading = false
       }
     },
     async gamesNameList(){
       const { data } = await this.getGamesList()
       this.gamesList = data
-      this.formData.paras.competitionName = data[0].competitionName // 默认选择第一个大赛,产品要求!
+      this.formData.paras.competitionName = data[0].competitionName 
     },
     open(val){
       switch (val) {

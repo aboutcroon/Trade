@@ -51,6 +51,7 @@
                 type="primary"
                 size="small"
                 @click="uploadDelete()"
+                :disabled="disabled"
               >删除</el-button>
             </div>
           </div>
@@ -132,30 +133,39 @@ export default {
           this.infoData.organizationContact = res.data.organizationContact;
           this.infoData.organizationMobile = res.data.organizationMobile;
           this.imageUrl = res.data.businessLicenseUrl;
-          if (res.data.organizationName != '' && res.data.organizationName != null) {
+          if (
+            res.data.organizationName != "" &&
+            res.data.organizationName != null
+          ) {
             this.disabled = true;
           }
         }
       });
     },
     addFun() {
-      let formData = new FormData();
+      this.$refs['form'].validate(valid => {
+        if (valid) {
+          let formData = new FormData();
 
-      for (let key in this.infoData) {
-        formData.append(key, this.infoData[key]);
-      }
-      if (this.file1) {
-        formData.append("file", this.file1.raw, this.file1.raw.name);
-      }
-      postFile("/trade-web/api/competitor/organization/add", formData).then(
-        res => {
-          if (res.code == 200) {
-            this.$message.success(res.message);
-          }else{
-            this.$message.error(res.message);
+          for (let key in this.infoData) {
+            formData.append(key, this.infoData[key]);
           }
+          if (this.file1) {
+            formData.append("file", this.file1.raw, this.file1.raw.name);
+          }
+          postFile("/trade-web/api/competitor/organization/add", formData).then(
+            res => {
+              if (res.code == 200) {
+                this.$message.success(res.message);
+              } else {
+                this.$message.error(res.message);
+              }
+            }
+          );
+        } else {
+          return false;
         }
-      );
+      });
     },
     /**修改推荐人 */
     referrerModifyFun() {},
@@ -172,6 +182,9 @@ export default {
           this.$message.error("上传的电子照片只能JPG格式");
         }
       }
+    },
+    uploadDelete(){
+      this.imageUrl = '';
     }
   }
 };

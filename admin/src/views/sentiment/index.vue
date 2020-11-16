@@ -86,18 +86,18 @@
                 <span>{{ scope.row.createTime | timeFilter13 }}</span>
               </template>
             </el-table-column>
-            <!-- <el-table-column label="作品评分" :show-overflow-tooltip="true">
+             <el-table-column label="星光值" :show-overflow-tooltip="true">
               <template slot-scope="scope">{{ scope.row.worksScore }}</template>
             </el-table-column>
             <el-table-column label="所获奖项" :show-overflow-tooltip="true">
               <template slot-scope="scope">{{ scope.row.prizeRateName }}</template>
-            </el-table-column> -->
+            </el-table-column> 
             <el-table-column label="作品缩略图" :show-overflow-tooltip="true">
               <template slot-scope="scope">{{ scope.row.worksJpgUrl |imgs}}</template>
             </el-table-column>
             <el-table-column align="center" prop="created_at" label="操作" min-width="200" fixed="right">
               <template slot-scope="scope">
-                <el-link class="icon iconfont icontask" size="mini" type="primary" plain @click="goOpus(scope.row.worksId)">查看&nbsp;&nbsp;</el-link>
+                <el-link class="icon iconfont icontask" size="mini" type="primary" plain @click="goOpus(scope.row.worksId,scope.row.worksStatus)">查看&nbsp;&nbsp;</el-link>
                 <el-link class="icon iconfont iconchehuisekuai" size="mini" type="danger" plain @click="deleteFun(scope.row.menuId)">驳回&nbsp;&nbsp;</el-link>
                 <el-link class="icon iconfont iconactivated" size="mini" type="success" plain @click="adoptFun(scope.row)">通过</el-link>
               </template>
