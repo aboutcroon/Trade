@@ -1,0 +1,15 @@
+@import "element";
+
+body, html {
+  font-family: 'NotoSansHans-Regular', 'Microsoft YaHei', sans-serif;
+  background-color: #fff;
+}
+
+@font-face {
+  font-family: "NotoSansHans-Regular";
+  src: url("font/NotoSansHans-Regular.woff2") format("woff2"),
+  url("font/NotoSansHans-Regular.woff") format("woff"),
+  url("font/NotoSansHans-Regular.ttf") format("truetype"),
+  url("font/NotoSansHans-Regular.eot") format("embedded-opentype"),
+  url("font/NotoSansHans-Regular.svg") format("svg");
+}

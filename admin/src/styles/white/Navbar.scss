@@ -1,0 +1,200 @@
+.navbar {
+  height: $NavHeight;
+  overflow: hidden;
+  position: relative;
+  background: $eff2f5;
+  //box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+
+  .hamburger-container {
+    line-height: $NavHeight;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+    transition: background 0.3s;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.025);
+    }
+  }
+
+  .breadcrumb-container {
+    float: left;
+  }
+
+  .errLog-container {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .right-menu {
+    float: right;
+    height: 100%;
+    line-height: $NavHeight;
+
+    &:focus {
+      outline: none;
+    }
+
+    .right-menu-item {
+      display: inline-block;
+      padding: 0 8px;
+      height: 100%;
+      font-size: 18px;
+      color: #5a5e66;
+      vertical-align: text-bottom;
+
+      &.hover-effect {
+        cursor: pointer;
+        transition: background 0.3s;
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.025);
+        }
+      }
+    }
+
+    .avatar-container {
+      margin-right: 10px;
+
+      .avatar-wrapper {
+        //margin-top: 5px;
+        position: relative;
+        .iconprofile {
+          font-size: 18px;
+          vertical-align: -1.5px;
+        }
+        .iconmore {
+          font-size: 12px;
+        }
+        .user-avatar {
+          cursor: pointer;
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+        }
+
+        .el-icon-caret-bottom {
+          cursor: pointer;
+          position: absolute;
+          right: -20px;
+          top: 25px;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+.screenfull-svg {
+  font-size: 18px !important;
+  vertical-align: -1.5px;
+}
+
+.iconHtml {
+  font-size: 14px;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
+    Microsoft YaHei, SimSun, sans-serif;
+  font-weight: 400;
+  color: rgba(29, 35, 70, 1);
+  line-height: 20px;
+}
+
+.navbar-badge {
+  .navber-badge-title {
+    margin: 0;
+    padding: 5px 0 16px;
+    display: flex;
+    justify-content: space-between;
+    .navber-badge-text {
+      padding: 0 10px;
+      color: #495abf;
+    }
+    .navber-badge-close {
+      cursor: pointer;
+      padding-right: 4px;
+    }
+  }
+  .navber-badge-list {
+    max-height: 159px;
+    overflow-y: auto;
+    padding-right: 5px;
+    margin-bottom: 18px;
+    color: #8e91a2;
+    font-size: 14px;
+    line-height: 14px;
+    &::-webkit-scrollbar {
+      width: 2px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 1px;
+      background-color: #3b3783;
+    }
+    &::-webkit-scrollbar-track {
+      background: #d8d8d8;
+    }
+    .navber-badge-item {
+      border-radius: 6px;
+      display: flex;
+      padding: 9px 28px 9px 23px;
+      margin-bottom: 10px;
+      position: relative;
+      cursor: pointer;
+      transition: background-color .25s ease;
+      .navber-badge-time {
+        color: #c3c9d6;
+        font-size: 12px;
+        margin-left: auto;
+      }
+      .navber-badge-unread {
+        display: none;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: #bf495a;
+        position: absolute;
+        top: 14px;
+        left: 10px;
+      }
+      .icon.iconfont.icondelete {
+        visibility: hidden;
+        position: absolute;
+        top: 9px;
+        right: 10px;
+        color: #bf495a;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+      &:hover {
+        background-color: #f2f5fa;
+        .icon.iconfont.icondelete {
+          visibility: visible;
+        }
+      }
+      &.active {
+        .navber-badge-message {
+          color: #1d2346;
+        }
+        .navber-badge-time {
+          color: #8794ae;
+        }
+        .navber-badge-unread {
+          display: block;
+        }
+      }
+    }
+  }
+  .navber-badge-clear {
+    text-align: center;
+    .el-button {
+      width: 200px;
+      min-height: 36px;
+      border: none;
+      color: #8794ae;
+      &:hover, &:focus {
+        color: #fff;
+      }
+    }
+  }
+}
+

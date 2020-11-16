@@ -1,0 +1,79 @@
+.account-number {
+  .el-checkbox__label {
+    font-size: 12px;
+    color: #999999;
+  }
+  .el-checkbox__inner {
+    width: 12px;
+    height: 12px;
+  }
+  .el-checkbox__inner::after {
+    left: 3px;
+    top: 0px;
+  }
+  .tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .line {
+    margin: 0 -60px;
+    border-bottom: 1px solid #eeeeee;
+  }
+  .get-code {
+    cursor: pointer;
+    color: #ff0000;
+    padding-right: 5px;
+    &.color-gray {
+      color: #b4bccc;
+    }
+  }
+  .el-icon-loading {
+    margin-right: 5px;
+  }
+  .verification-code {
+    cursor: pointer;
+    margin-left: 10px;
+    img {
+      width: 120px;
+    }
+  }
+  .automatic-log-in {
+    color: #999999;
+    font-size: 14px;
+    .el-checkbox {
+      margin-right: 5px;
+    }
+    .el-checkbox__label {
+      padding-left: 5px;
+    }
+  }
+  .submit {
+    margin-bottom: 20px;
+  }
+  .bottom-text {
+    font-size: 12px;
+    color: #999999;
+    display: flex;
+    justify-content: space-between;
+    &.justify-end {
+      justify-content: flex-end;
+    }
+    .left .el-checkbox {
+      margin-right: 5px;
+    }
+    .bottom-right-link {
+      color: #ff0000;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #ff0000;
+    }
+    .right {
+      margin-top: 1.5px;
+    }
+  }
+}
+.account-number {
+  .step {
+    margin-bottom: 20px;
+  }
+}

@@ -1,0 +1,12 @@
+// 引入变量
+@import 'palette.scss';
+// 重置默认样式
+@import 'reset.scss';
+// 引入公共样式
+@import 'global.scss';
+// 修改 element ui 默认样式
+@import 'element-ui.scss';
+// 账号相关
+@import 'account.scss';
+// 各页面轮播样式
+@import 'carousel.scss';

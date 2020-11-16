@@ -1,0 +1,213 @@
+// cover some element-ui styles
+
+.el-upload {
+  input[type="file"] {
+    display: none !important;
+  }
+}
+
+.el-upload__input {
+  display: none;
+}
+
+.cell {
+  .el-tag {
+    margin-right: 0px;
+  }
+}
+
+.small-padding {
+  .cell {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+.fixed-width {
+  .el-button--mini {
+    padding: 7px 10px;
+    width: 60px;
+  }
+}
+
+.status-col {
+  .cell {
+    padding: 0 10px;
+    text-align: center;
+
+    .el-tag {
+      margin-right: 0px;
+    }
+  }
+}
+
+// to fixed https://github.com/ElemeFE/element/issues/2461
+.el-dialog {
+  transform: none;
+  left: 0;
+  position: relative;
+  margin: 0 auto;
+}
+
+// refine element ui upload
+.upload-container {
+  .el-upload {
+    width: 100%;
+
+    .el-upload-dragger {
+      width: 100%;
+      height: 200px;
+    }
+  }
+}
+
+// dropdown
+.el-dropdown-menu {
+  a {
+    display: block
+  }
+}
+
+// fix date-picker ui bug in filter-item
+.el-range-editor.el-input__inner {
+  display: inline-flex !important;
+}
+
+// to fix el-date-picker css style
+.el-range-separator {
+  box-sizing: content-box;
+}
+
+// .el-form-item--mini.el-form-item,
+// .el-form-item--small.el-form-item {
+//   margin-bottom: 20px !important;
+// }
+
+//弹出抽屉
+.el-drawer {
+  // overflow-y: scroll;
+  overflow-y: auto;
+}
+
+.el-drawer__body {
+  padding: 0px 15px 30px 15px;
+}
+
+.el-drawer__header {
+  margin-bottom: 0px !important;
+  padding: 15px !important;
+}
+
+.el-button--text {
+  display: none;
+
+}
+
+.el-input--suffix .el-input__inner {
+  padding-right: 25px !important;
+}
+
+// .el-divider--horizontal{
+//     margin: 15px 0 25px 0;
+// }
+.el-select {
+  width: 100%;
+}
+
+.el-table__row .el-link {
+  font-size: 12px;
+  font-weight: inherit;
+}
+
+/*弹框*/
+.el-dialog__body {
+  padding: 20px;
+}
+
+.el-dialog {
+  // overflow: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0 !important;
+  transform: translate(-50%, -50%);
+  max-height: calc(100% - 30px);
+  max-width: calc(100% - 30px);
+  display: flex;
+  flex-direction: column;
+
+  >.el-dialog__body {
+    overflow: auto;
+    // overflow-y: scroll;
+    max-height: 400px;
+    color: #666666;
+  }
+}
+
+/*预览按钮*/
+.send {
+  width: 100%;
+  height: 60px;
+  padding: 0;
+  position: fixed;
+  bottom: -1px;
+  right: 16px;
+  z-index: 2999;
+  overflow: hidden;
+
+  .sendBox {
+    text-align: center;
+    margin-left: 242px;
+    background: #fff;
+    padding: 22px 1rem 9px 16px;
+  }
+
+  // right: 50%;
+  el-button {
+    z-index: 2999;
+    margin-left: -200px;
+  }
+}
+
+/*分页*/
+.pagination {
+  width: 100%;
+  height: 60px;
+  padding: 0;
+  position: fixed;
+  bottom: 0;
+  right: 16px;
+  z-index: 2999;
+  overflow: hidden;
+
+  .pagination-container {
+    margin-left: 242px;
+  }
+
+  .hideSidebar .main-container .pagination-container {
+    margin-left: 94px;
+  }
+}
+
+.table_padding {
+  margin-bottom: 50px;
+}
+.el-date-editor.el-input,
+.el-date-editor.el-input__inner{
+  width: 189px;
+}
+
+.el-pagination .el-select .el-input .el-input__inner {
+  height: 28px;
+  line-height: 32px;
+  border-radius: 3px;
+}
+.el-pagination .el-input.el-input--small.el-pagination__editor.is-in-pagination .el-input__inner {
+  border-radius: 3px;
+}
+// 抽屉弹框
+.el-drawer__body .el-tabs__nav-scroll{
+  display: -webkit-flex;
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+}

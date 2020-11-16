@@ -1,0 +1,105 @@
+@font-face {
+  font-family: "NotoSansHans";
+  src: url("./font-family/NotoSansHans-Regular.woff2") format("woff2"),
+       url("./font-family/NotoSansHans-Regular.woff") format("woff"),
+       url("./font-family/NotoSansHans-Regular.ttf") format("truetype"),
+       url("./font-family/NotoSansHans-Regular.eot") format("embedded-opentype"),
+       url("./font-family/NotoSansHans-Regular.svg") format("svg");
+}
+body {
+  font-family: "NotoSansHans", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+.container {
+  width: 1480px;;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.min-width {
+  min-width: $min-container;
+}
+.button-red {
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  color: #ffffff;
+  background-color: #ff0000;
+  transition: 0.1s;
+  &:hover {
+    background-color: #ff3333;
+  }
+  &:active {
+    background-color: #e60000;
+  }
+}
+.button-tab {
+  cursor: pointer;
+  display: inline-block;
+  background-color: #dadada;
+  color: #ffffff;
+  padding: 10px 24px;
+  line-height: 1;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  &.active {
+    background-color: #ff0000;
+  }
+  &:first-child {
+    margin-left: 0;
+  }
+}
+.button-form {
+  width: 100%;
+}
+
+.home-button {
+  min-width: 144px;
+  min-height: 40px;
+  line-height: 40px;
+}
+.return-button {
+  padding: 6px 12px;
+  font-size: 14px;
+  margin-right: 10px;
+}
+.help-button {
+  color: #ffffff;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+.background-top {
+  background: rgba(255, 255, 255, 1);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.06) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0 );
+}
+.background-bottom {
+  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.06);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0 );
+}
+
+#app {
+  .margin-bottom-30 {
+    margin-bottom: 30px;
+  }
+}

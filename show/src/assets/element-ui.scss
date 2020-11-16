@@ -1,0 +1,61 @@
+$lineHeight: 50px;
+
+/* button 按钮 */
+button {
+  &.el-button {
+    border-radius: 0px;
+    padding: 17px 20px;
+    font-size: 16px;
+  }
+}
+
+/* input 样式 */
+input {
+  &.el-input__inner {
+    border-radius: 2px;
+    height: $lineHeight;
+    line-height: $lineHeight;
+  }
+
+}
+
+.el-input {
+
+  .el-input-group__append,
+  .el-input-group__prepend {
+    background-color: transparent;
+    color: #333;
+    border-radius: 2px;
+    padding: 0 16px;
+  }
+
+  .el-input-group--append .el-input__inner,
+  .el-input-group__prepend {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+/* 表单样式 */
+.el-form {
+  .el-form-item {
+    margin-bottom: 20px;
+  }
+
+  .el-form-item__content {
+    line-height: $lineHeight;
+  }
+}
+
+/*table head样式*/
+.el-table thead {
+  font-size: 14px;
+  font-family: SourceHanSansCN;
+  font-weight: 500;
+  color: #333333 !important;
+  line-height: 28px;
+}
+
+.el-button.is-round {
+  padding: 10px 23px !important;
+}

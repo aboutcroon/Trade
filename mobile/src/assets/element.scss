@@ -1,0 +1,164 @@
+@import "mixin";
+
+.sample {
+  .el-tabs {
+    .el-tabs__header {
+      margin: 0;
+
+      .el-tabs__nav-wrap {
+        padding: 0;
+
+        &::after {
+          @include wh(86.391944vw, 0.265006vw);
+          @include cl;
+        }
+
+        .el-tabs__item.is-active {
+          @include font(4.240095vw, 6.360143vw, Bold);
+          color: #454545;
+        }
+
+        .el-tabs__active-bar {
+          background-color: #B30000;
+        }
+
+        .el-tabs__item {
+          font-size: 3.710083vw;
+          color: #636363;
+          padding: 0.795018vw 0 0 0;
+        }
+
+        #tab-first {
+          padding-left: 2.915066vw;
+          padding-right: 3.445078vw;
+        }
+
+        #tab-second {
+          padding-right: 3.445078vw;
+        }
+
+        #tab-third {
+          padding-right: 3.445078vw;
+        }
+
+        #tab-fourth {
+          padding-right: 3.445078vw;
+        }
+      }
+    }
+  }
+}
+
+.competition {
+  .el-tabs {
+    width: 84.00689vw;
+
+    .el-tabs__header {
+      margin: 0;
+
+      .el-tabs__nav-wrap {
+        padding: 0;
+
+        &::after {
+          @include wh(86.391944vw, 0.265006vw);
+          @include cl;
+          height: 0;
+        }
+
+        .el-tabs__item.is-active {
+          font-weight: 500;
+          color: #B30000;
+        }
+
+        .el-tabs__active-bar {
+          width: 7.420167vw !important;
+          height: 0.795018vw;
+          left: 4.240095vw;
+          background-color: #B30000;
+        }
+
+        .el-tabs__item {
+          @include font(3.710083vw, 5.565125vw);
+          height: 8.745197vw;
+          color: #BBBBBB;
+          letter-spacing: 0.212005vw;
+          padding: 0.795018vw 0 0 0;
+        }
+
+        #tab-first {
+          padding-left: 3.180072vw;
+          padding-right: 14.310322vw;
+        }
+
+        #tab-second {
+          padding-right: 14.310322vw;
+        }
+
+        #tab-third {
+          padding-right: 2.65006vw;
+        }
+      }
+    }
+  }
+}
+
+.guests {
+  .el-tabs {
+    width: 99.377236vw;
+
+    .el-tabs__header {
+      margin: 0;
+
+      .el-tabs__nav-wrap {
+        padding: 0;
+
+        &::after {
+          @include wh(86.391944vw, 0.265006vw);
+          @include cl;
+          height: 0;
+        }
+
+        .el-tabs__item.is-active {
+          font-weight: 500;
+          color: #B30000;
+        }
+
+        .el-tabs__active-bar {
+          width: 3.975089vw !important;
+          height: 0.795018vw;
+          left: 7.240095vw;
+          background-color: #B30000;
+        }
+
+        .el-tabs__item {
+          @include font(3.710083vw, 5.565125vw);
+          height: 8.745197vw;
+          color: #BBBBBB;
+          letter-spacing: 0.212005vw;
+          padding: 0.795018vw 0 0 0;
+        }
+
+        #tab-first {
+          padding-left: 20.935471vw;
+          padding-right: 3.975089vw;
+          margin-left: 3.180072vw;
+        }
+
+        #tab-second {
+          padding-left: 20.670465vw;
+          margin-left: -3.975089vw;
+        }
+      }
+    }
+  }
+}
+
+
+.el-dialog__body {
+  padding: 0 !important;
+}
+
+.el-dialog__title {
+  @include font(5.300119vw, 7.420167vw, Bold);
+  color: #454545;
+}

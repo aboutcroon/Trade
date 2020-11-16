@@ -1,0 +1,148 @@
+$colors:(
+  'white':#fff,
+  'filter':rgba(0, 0, 0, 0.15),
+  'rate':#666,
+  'point-p':#454545,
+  'point-span':#999
+);
+$fontFamily:PingFangSC-Regular, PingFang SC;
+
+/* 评分 */
+.ratebox {
+  margin-top: 30px;
+  margin-left: 85px;
+  .rate {
+    padding-top:10px;
+    font-size: 14px;
+    font-family: $fontFamily;
+    font-weight: 400;
+    color: map-get($colors,'rate');
+    line-height: 20px;
+    /deep/ .el-rate__icon {
+      margin-right: 10px !important;
+    }
+  }
+  .point {
+    p {
+      margin: 0;
+      font-size: 16px;
+      font-family: $fontFamily;
+      font-weight: 500;
+      color: map-get($colors,'point-p');
+      line-height: 22px;
+    }
+    span {
+      font-size: 14px;
+      font-family: $fontFamily;
+      font-weight: 400;
+      color: map-get($colors,'point-span');
+      line-height: 20px;
+    }
+  }
+}
+/* 作品详情 */
+.box {
+  display: flex;
+  justify-content: space-between;
+  .transform {
+    position: relative;
+    height:252px;
+    margin-left: 50px;
+    margin-top: -75px;
+    box-shadow: 4px 8px 13px -1px rgba(0, 0, 0, 0.3);
+    .filterBox {
+      font-size: 16px;
+      color: map-get($colors,'white');
+      position: absolute;
+      top: 24px;
+      background:map-get($colors,'filter');
+      width:96px;
+      height:36px;
+      line-height: 36px;
+      text-align: center;
+      border-radius: 0px 100px 100px 0px;
+    }
+  }
+  .articles {
+    width: 100%;
+    padding-left: 2.3rem;
+    padding-top: 6px;
+    .authorname {
+      font-size: 14px;
+      font-family: $fontFamily;
+      font-weight: 500;
+      color: #C1C1C1;
+      line-height: 20px;
+    }
+    .nonecolor {
+      color: #454545 !important;
+    }
+    .author {
+      font-size: 18px;
+      font-family: $fontFamily;
+      font-weight: 500;
+      color: #BB9C55;
+      margin:0 0 ;
+      line-height: 25px;
+    }
+    p {
+      font-size: 14px;
+      font-family: $fontFamily;
+      font-weight: 400;
+      color: #666666;
+      line-height: 20px;
+    }
+    .btn-opus {
+      width:120px;
+      font-size: 12px;
+      border-radius:15px !important;
+      border: 1px solid #454545 !important;
+    }
+    .sucessbtn:hover {
+      background-color: #E5F7F7 !important;
+      color:#00B3B3;
+    }
+  }
+}
+/* 头部背景 */
+header {
+  padding: 0 40px;
+  height: 160px;
+  background-color: map-get($colors, "pink");
+  background: url("../../../src/assets/pexels.png") no-repeat top center;
+  background-size: cover;
+  .logo {
+    padding-top: 5rem;
+    display: flex;
+    justify-content: space-between;
+    .opus {
+      display: flex;
+      position: relative;
+      margin-top: -23px;
+    .opustitle {
+      font-size: 20px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 500;
+      color: #FFFFFF;
+      line-height: 28px;
+      position: absolute;
+      top: -40px;
+    }
+    p {
+      font-size: 14px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 500;
+      color: #c1c1c1;
+      line-height: 20px;
+        span {
+          font-size: 14px;
+          font-family: $fontFamily;
+          font-weight: 400;
+          color: #ffffff;
+          line-height: 20px;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}
